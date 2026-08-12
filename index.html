@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>یادگیرنده لایتنر هوشمند</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif; /* فونت فارسی */
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Start from top */
+            min-height: 100vh;
+            box-sizing: border-box;
+            padding-bottom: 60px; /* Space for potential footer */
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 20px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #0077cc;
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: #e8f4fd;
+            border: 1px solid #b3d9ff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 150px; /* Minimum height for card */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+        .card-content {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+        .hidden {
+            display: none;
+        }
+        input[type="text"], textarea {
+            width: calc(100% - 20px); /* Adjust width considering padding */
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box; /* Important for padding */
+        }
+        button {
+            background-color: #0077cc;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+        .small-button {
+            padding: 8px 12px;
+            font-size: 0.9em;
+            background-color: #6c757d;
+        }
+        .small-button:hover {
+            background-color: #5a6268;
+        }
+        .stats {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .hidden-input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        /* Styles for image upload preview */
+        .image-preview {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 4px;
+            display: block; /* Center the image */
+        }
+    </style>
+    <!-- Vazirmatn Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-வேائرmatn/v33/font-face/font-face.css">
+</head>
+<body>
+    <div class="container">
+        <h1>یادگیرنده لایتنر هوشمند</h1>
+        <div id="app">
+            <!-- Add Card Section -->
+            <div id="add-card-section">
+                <h2>کارت جدید اضافه کنید</h2>
+                <label for="card-type">نوع کارت:</label>
+                <select id="card-type" onchange="updateInputFields()">
+                    <option value="english">انگلیسی (معنی فارسی)</option>
+                    <option value="chinese">چینی/مفهومی (با تصویر)</option>
+                </select>
+                <br><br>
+
+                <div id="english-fields">
+                    <label for="english-word">کلمه انگلیسی:</label>
+                    <input type="text" id="english-word" placeholder="مثال: apple">
+                    <label for="english-meaning">معنی فارسی:</label>
+                    <input type="text" id="english-meaning" placeholder="مثال: سیب">
+                    <label for="english-image">تصویر (اختیاری):</label>
+                    <input type="file" id="english-image" accept="image/*" onchange="previewImage(event, 'english')">
+                    <img id="english-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                </div>
+
+                <div id="chinese-fields" class="hidden">
+                    <label for="chinese-char">کاراکتر/مفهوم:</label>
+                    <input type="text" id="chinese-char" placeholder="مثال: 你好 یا فلسفه">
+                    <label for="chinese-meaning">معنی:</label>
+                    <input type="text" id="chinese-meaning" placeholder="مثال: سلام یا هستی">
+                    <label for="chinese-image">تصویر (اختیاری - مثلاً نقشه ذهنی):</label>
+                    <input type="file" id="chinese-image" accept="image/*" onchange="previewImage(event, 'chinese')">
+                    <img id="chinese-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                </div>
+
+                <button onclick="addCard()">افزودن کارت</button>
+            </div>
+
+            <hr>
+
+            <!-- Review Section -->
+            <div id="review-section">
+                <h2>مرور کارت‌ها</h2>
+                <div id="current-card" class="card">
+                    <div class="card-content" id="card-front"></div>
+                    <div class="card-content hidden" id="card-back"></div>
+                </div>
+                <div class="button-group">
+                    <button id="show-answer-btn" onclick="showAnswer()" style="display: none;">نمایش پاسخ</button>
+                    <button id="got-it-btn" class="small-button" onclick="handleAnswer(true)" style="display: none;">یادم بود!</button>
+                    <button id="did-not-get-it-btn" class="small-button" onclick="handleAnswer(false)" style="display: none;">اشتباه گفتم!</button>
+                    <button id="type-english-btn" onclick="handleAnswer(true, true)" style="display: none;">یادم بود! (تایپ انگلیسی)</button>
+                </div>
+                <div class="stats" id="stats"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Database Operations (IndexedDB) ---
+        let db;
+        const DB_NAME = 'lightnerDB';
+        const STORE_NAME = 'cards';
+        const DB_VERSION = 1;
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onerror = (event) => {
+                    console.error("Error opening database:", event.target.error);
+                    reject("Could not open database");
+                };
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    resolve();
+                };
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        objectStore.createIndex('nextReview', 'nextReview');
+                        objectStore.createIndex('box', 'box');
+                        console.log("Object store created");
+                    }
+                };
+            });
+        }
+
+        function getCardsToReview() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const today = new Date().setHours(0, 0, 0, 0);
+                const request = store.index('nextReview').getAll(IDBKeyRange.upperBound(today));
+
+                request.onsuccess = (event) => {
+                    resolve(event.target.result);
+                };
+                request.onerror = (event) => {
+                    console.error("Error fetching cards:", event.target.error);
+                    reject("Could not fetch cards");
+                };
+            });
+        }
+
+        function addCardToDB(card) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.add(card);
+                request.onsuccess = (event) => {
+                    resolve(event.target.result);
+                };
+                request.onerror = (event) => {
+                    console.error("Error adding card:", event.target.error);
+                    reject("Could not add card");
+                };
+            });
+        }
+
+        function updateCardInDB(card) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put(card); // Use put to update
+                request.onsuccess = () => {
+                    resolve();
+                };
+                request.onerror = (event) => {
+                    console.error("Error updating card:", event.target.error);
+                    reject("Could not update card");
+                };
+            });
+        }
+
+        function getAllCards() {
+             return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+                request.onsuccess = (event) => {
+                    resolve(event.target.result);
+                };
+                request.onerror = (event) => {
+                    console.error("Error getting all cards:", event.target.error);
+                    reject("Could not get all cards");
+                };
+            });
+        }
+
+        // --- UI Logic ---
+        let currentCard = null;
+        let isAnswerShown = false;
+        let reviewMode = 'recognition'; // 'recognition' or 'production'
+        let cardsForReview = [];
+        let currentCardIndex = 0;
+
+        const BOX_INTERVALS = [0, 1, 2, 4, 8, 15]; // Intervals in days for boxes 1 to 5
+
+        function calculateNextReview(box) {
+            const interval = BOX_INTERVALS[box];
+            const today = new Date();
+            const nextReviewDate = new Date(today.setDate(today.getDate() + interval));
+            return nextReviewDate.setHours(0, 0, 0, 0); // Normalize to start of day
+        }
+
+        function updateCardDisplay() {
+            const cardFrontEl = document.getElementById('card-front');
+            const cardBackEl = document.getElementById('card-back');
+            const showAnswerBtn = document.getElementById('show-answer-btn');
+            const gotItBtn = document.getElementById('got-it-btn');
+            const didNotGetItBtn = document.getElementById('did-not-get-it-btn');
+            const typeEnglishBtn = document.getElementById('type-english-btn');
+            const cardEl = document.getElementById('current-card');
+            const statsEl = document.getElementById('stats');
+
+            cardFrontEl.innerHTML = '';
+            cardBackEl.innerHTML = '';
+            cardBackEl.classList.add('hidden');
+            showAnswerBtn.style.display = 'none';
+            gotItBtn.style.display = 'none';
+            didNotGetItBtn.style.display = 'none';
+            typeEnglishBtn.style.display = 'none';
+            cardEl.style.minHeight = '150px'; // Reset min-height
+
+            if (currentCard) {
+                cardEl.style.minHeight = 'auto'; // Allow card to resize if content is large
+                if (currentCard.type === 'english') {
+                    cardFrontEl.innerHTML = `<strong>${currentCard.word}</strong>`;
+                    cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
+                    if (currentCard.imageUrl) {
+                        cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="image-preview" style="max-height: 150px; margin-top: 10px;">`;
+                    }
+                    showAnswerBtn.style.display = 'block';
+                } else { // chinese or concept
+                    cardFrontEl.innerHTML = `<strong>${currentCard.char}</strong>`;
+                    cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
+                     if (currentCard.imageUrl) {
+                        cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="image-preview" style="max-height: 150px; margin-top: 10px;">`;
+                    }
+                    showAnswerBtn.style.display = 'block';
+                }
+                updateStats();
+            } else {
+                cardFrontEl.textContent = "همه کارت‌های امروز مرور شدند!";
+                statsEl.textContent = "آفرین! استراحت کن.";
+            }
+        }
+        
+        function updateStats() {
+            const statsEl = document.getElementById('stats');
+            let statsText = `کارت فعلی: ${currentCardIndex + 1}/${cardsForReview.length} | `;
+            statsText += `جعبه ${currentCard.box} | `;
+            statsText += `نوع: ${currentCard.type === 'english' ? 'انگلیسی' : 'چینی/مفهومی'}`;
+            statsEl.textContent = statsText;
+        }
+
+        function showAnswer() {
+            isAnswerShown = true;
+            document.getElementById('card-back').classList.remove('hidden');
+            document.getElementById('show-answer-btn').style.display = 'none';
+
+            // Decide which buttons to show next based on card type and review mode
+            if (currentCard.type === 'english') {
+                if (currentCard.learnedCount >= 1 && Math.random() < 0.2) { // 20% chance for production mode after 1st review
+                    document.getElementById('type-english-btn').style.display = 'block';
+                } else {
+                    document.getElementById('got-it-btn').style.display = 'block';
+                    document.getElementById('did-not-get-it-btn').style.display = 'block';
+                }
+            } else { // Chinese/Concept
+                document.getElementById('got-it-btn').style.display = 'block';
+                document.getElementById('did-not-get-it-btn').style.display = 'block';
+            }
+        }
+
+        async function handleAnswer(isCorrect, isProductionMode = false) {
+            if (!currentCard) return;
+
+            let nextBox = currentCard.box;
+            let nextReviewDate = currentCard.nextReview;
+            let learnedCount = currentCard.learnedCount || 0;
+
+            if (isCorrect) {
+                if (currentCard.box < 5) {
+                    nextBox = currentCard.box + 1;
+                    nextReviewDate = calculateNextReview(nextBox);
+                } else {
+                    // Card is already in the final box, no further progression in boxes
+                    // Reset interval to a longer duration or keep it as is if it means "mastered"
+                    nextReviewDate = calculateNextReview(5); // Keep reviewing every 15 days, or you can set it to a much longer period.
+                }
+                learnedCount++;
+            } else {
+                nextBox = 1; // Reset to box 1
+                nextReviewDate = calculateNextReview(1); // Review tomorrow
+                learnedCount = 0; // Reset learned count on error
+            }
+
+            // Handle production mode specific logic
+            if (isProductionMode && isCorrect) {
+                 // If it was in production mode and correct, it should still progress
+                 // The logic above already handled correct answer progression
+            } else if (isProductionMode && !isCorrect) {
+                // If production mode was triggered but answer was incorrect
+                nextBox = 1;
+                nextReviewDate = calculateNextReview(1);
+                learnedCount = 0;
+            }
+
+            currentCard.box = nextBox;
+            currentCard.nextReview = nextReviewDate;
+            currentCard.learnedCount = learnedCount;
+            currentCard.lastReviewDate = new Date().setHours(0,0,0,0); // Mark current review date
+
+            await updateCardInDB(currentCard);
+
+            // Move to the next card
+            currentCardIndex++;
+            loadNextCard();
+        }
+
+        function loadNextCard() {
+            isAnswerShown = false;
+            if (currentCardIndex < cardsForReview.length) {
+                currentCard = cardsForReview[currentCardIndex];
+                updateCardDisplay();
+            } else {
+                currentCard = null;
+                updateCardDisplay();
+            }
+        }
+
+        function updateInputFields() {
+            const cardType = document.getElementById('card-type').value;
+            document.getElementById('english-fields').classList.toggle('hidden', cardType !== 'english');
+            document.getElementById('chinese-fields').classList.toggle('hidden', cardType !== 'chinese');
+        }
+
+        function previewImage(event, type) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const previewId = type === 'english' ? 'english-preview' : 'chinese-preview';
+                const img = document.getElementById(previewId);
+                img.src = reader.result;
+                img.classList.remove('hidden');
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        
+        function getBase64Image(imgElement) {
+            if (!imgElement || !imgElement.src || imgElement.src.startsWith('#')) return null;
+            // If the src is already a data URL, return it. Otherwise, it's an error or needs further processing (which is complex in plain JS without server)
+            // For simplicity, we assume it's already a data URL if it has a src.
+            if (imgElement.src.startsWith('data:image')) {
+                return imgElement.src;
+            }
+            return null; // Should not happen with FileReader logic
+        }
+
+        async function addCard() {
+            const cardType = document.getElementById('card-type').value;
+            let cardData = {
+                type: cardType,
+                box: 1,
+                nextReview: new Date().setHours(0,0,0,0), // Review today
+                learnedCount: 0,
+                lastReviewDate: null, // When it was last reviewed
+                imageUrl: null
+            };
+
+            if (cardType === 'english') {
+                cardData.word = document.getElementById('english-word').value.trim();
+                cardData.meaning = document.getElementById('english-meaning').value.trim();
+                const imageInput = document.getElementById('english-image');
+                const previewImg = document.getElementById('english-preview');
+                if (imageInput.files && imageInput.files[0]) {
+                    cardData.imageUrl = await getBase64Image(previewImg);
+                }
+            } else { // chinese or concept
+                cardData.char = document.getElementById('chinese-char').value.trim();
+                cardData.meaning = document.getElementById('chinese-meaning').value.trim();
+                 const imageInput = document.getElementById('chinese-image');
+                 const previewImg = document.getElementById('chinese-preview');
+                 if (imageInput.files && imageInput.files[0]) {
+                    cardData.imageUrl = await getBase64Image(previewImg);
+                }
+            }
+
+            if (!cardData.word && cardType === 'english' || !cardData.char && cardType !== 'english' || !cardData.meaning) {
+                alert("لطفاً تمام فیلدهای الزامی را پر کنید.");
+                return;
+            }
+
+            await addCardToDB(cardData);
+            alert("کارت با موفقیت اضافه شد!");
+            
+            // Clear input fields
+            document.getElementById('english-word').value = '';
+            document.getElementById('english-meaning').value = '';
+            document.getElementById('english-image').value = '';
+            document.getElementById('english-preview').src = '#';
+            document.getElementById('english-preview').classList.add('hidden');
+
+            document.getElementById('chinese-char').value = '';
+            document.getElementById('chinese-meaning').value = '';
+            document.getElementById('chinese-image').value = '';
+            document.getElementById('chinese-preview').src = '#';
+            document.getElementById('chinese-preview').classList.add('hidden');
+
+            // Refresh review queue if needed
+            await loadReviewQueue();
+        }
+
+        async function exportToCSV() {
+            const cards = await getAllCards();
+            if (!cards || cards.length === 0) {
+                alert("هیچ کارتی برای خروجی گرفتن وجود ندارد.");
+                return;
+            }
+
+            let csvContent = "id,type,box,nextReview,learnedCount,lastReviewDate,word,meaning,imageUrl,char\n"; // Header
+
+            cards.forEach(card => {
+                // Escape commas and quotes in data
+                const escapeCSV = (text) => {
+                    if (typeof text !== 'string') text = String(text);
+                    return `"${text.replace(/"/g, '""')}"`; // Double quotes for quotes, wrap in double quotes
+                };
+
+                csvContent += [
+                    escapeCSV(card.id),
+                    escapeCSV(card.type),
+                    escapeCSV(card.box),
+                    escapeCSV(card.nextReview ? new Date(card.nextReview).toISOString().split('T')[0] : ''), // Format date
+                    escapeCSV(card.learnedCount),
+                    escapeCSV(card.lastReviewDate ? new Date(card.lastReviewDate).toISOString().split('T')[0] : ''),
+                    escapeCSV(card.word || ''), // Handle undefined
+                    escapeCSV(card.meaning || ''),
+                    escapeCSV(card.imageUrl || ''),
+                    escapeCSV(card.char || '')
+                ].join(',') + '\n';
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            if (link.download) {
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "lightner_cards.csv");
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+
+        async function loadReviewQueue() {
+            await openDB(); // Ensure DB is open
+            cardsForReview = await getCardsToReview();
+            cardsForReview.sort((a, b) => a.nextReview - b.nextReview); // Sort by next review date
+            currentCardIndex = 0;
+            loadNextCard();
+        }
+
+        // --- Initial Load ---
+        window.onload = async () => {
+            await openDB();
+            await loadReviewQueue();
+            updateInputFields(); // Set initial fields based on default selection
+            
+            // Add export button dynamically
+            const container = document.querySelector('.container');
+            const exportBtn = document.createElement('button');
+            exportBtn.textContent = 'خروجی CSV';
+            exportBtn.onclick = exportToCSV;
+            exportBtn.style.marginTop = '20px';
+            exportBtn.style.display = 'block'; // Make it a block element
+            exportBtn.style.width = '100%';    // Full width
+            container.appendChild(exportBtn);
+
+            // Add some basic instructions
+            const instructionsDiv = document.createElement('div');
+            instructionsDiv.innerHTML = `
+                <p style="font-size: 0.9em; color: #666; text-align: center; margin-top: 20px;">
+                    <strong>نحوه استفاده:</strong><br>
+                    ۱. کارت جدید اضافه کنید (انگلیسی یا چینی/مفهومی).<br>
+                    ۲. کارت‌های آماده مرور را در بخش "مرور کارت‌ها" انجام دهید.<br>
+                    ۳. برای هر کارت، ابتدا معنی/مفهوم را حدس بزنید، سپس "نمایش پاسخ" را بزنید.<br>
+                    ۴. بعد از دیدن پاسخ، انتخاب کنید "یادم بود" یا "اشتباه گفتم".<br>
+                    ۵. در حالت انگلیسی، گاهی از شما املا خواسته می‌شود.<br>
+                    ۶. دکمه "خروجی CSV" برای گرفتن نسخه پشتیبان از اطلاعاتتان است.
+                </p>
+            `;
+            container.insertBefore(instructionsDiv, document.getElementById('add-card-section'));
+        };
+
+    </script>
+</body>
+</html>
