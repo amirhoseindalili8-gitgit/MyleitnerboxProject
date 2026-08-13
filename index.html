@@ -379,6 +379,11 @@
     .help-box strong{ color:var(--ink); }
 
     ::selection{ background:var(--accent-soft); }
+
+    /* ============ Word bank (add-from-bank) ============ */
+    #bank-panel.hidden, #manual-panel.hidden{ display:none; }
+    .bank-status{ font-size:.82em; color:var(--ink-soft); margin:2px 4px 10px; }
+    .bank-status code{ background:var(--surface-2); padding:1px 6px; border-radius:4px; }
 </style>
 </head>
 <body>
@@ -417,6 +422,32 @@
 
         <!-- ===================== ADD / EDIT TAB ===================== -->
         <section id="tab-add" class="tab-panel hidden">
+            <div class="segmented" id="add-mode-toggle">
+                <button class="seg-btn active" data-mode="manual" onclick="setAddMode('manual')">افزودن دستی</button>
+                <button class="seg-btn" data-mode="bank" onclick="setAddMode('bank')">از بانک لغات</button>
+            </div>
+
+            <div id="bank-panel" class="hidden">
+                <div class="toolbar-row">
+                    <input type="text" id="bank-search-input" placeholder="جستجوی کلمه یا معنی..." oninput="onBankFilterChange()">
+                </div>
+                <div class="chip-row" id="bank-level-chips">
+                    <button class="chip active" data-level="all" onclick="setBankLevelFilter('all')">همه سطوح</button>
+                    <button class="chip" data-level="A1" onclick="setBankLevelFilter('A1')">A1</button>
+                    <button class="chip" data-level="A2" onclick="setBankLevelFilter('A2')">A2</button>
+                    <button class="chip" data-level="B1" onclick="setBankLevelFilter('B1')">B1</button>
+                    <button class="chip" data-level="B2" onclick="setBankLevelFilter('B2')">B2</button>
+                    <button class="chip" data-level="C1" onclick="setBankLevelFilter('C1')">C1</button>
+                    <button class="chip" data-level="C2" onclick="setBankLevelFilter('C2')">C2</button>
+                </div>
+                <div id="bank-status" class="bank-status"></div>
+                <div id="bank-results"></div>
+                <div id="bank-load-more-wrap" class="hidden" style="text-align:center; margin-top:10px;">
+                    <button class="btn btn-ghost btn-small" onclick="showMoreBankResults()">نمایش بیشتر</button>
+                </div>
+            </div>
+
+            <div id="manual-panel">
             <div id="edit-banner" class="edit-banner hidden">
                 <span>در حال ویرایش کارت</span>
                 <button onclick="cancelEdit()">لغو</button>
@@ -465,6 +496,7 @@
 
                 <button class="btn btn-primary" id="save-card-btn" onclick="saveCard()">افزودن کارت</button>
             </div>
+            </div>
         </section>
 
         <!-- ===================== LIST TAB ===================== -->
@@ -509,7 +541,8 @@
                 ۳. برای هر کارت، ابتدا معنی را حدس بزنید، سپس «نمایش پاسخ» را بزنید.<br>
                 ۴. بعد از دیدن پاسخ، «یادم بود» یا «اشتباه گفتم» را انتخاب کنید تا کارت بین جعبه‌ها جابجا شود.<br>
                 ۵. در بخش «لیست» می‌توانید همه‌ی لغات را ببینید، جستجو، ویرایش یا حذف کنید.<br>
-                ۶. برای پشتیبان‌گیری از «خروجی CSV» و برای بازیابی از «ورودی CSV» استفاده کنید.
+                ۶. برای پشتیبان‌گیری از «خروجی CSV» و برای بازیابی از «ورودی CSV» استفاده کنید.<br>
+                ۷. در تب «افزودن»، با زدن «از بانک لغات» می‌توانید بین هزاران کلمه‌ی سطح‌بندی‌شده (A1 تا C2) جستجو یا مرور کنید و با یک ضربه به کارت‌های خود اضافه کنید — بدون نیاز به تایپ دستی.
             </div>
         </section>
     </div>
@@ -947,6 +980,143 @@
     }
 
     // ============================================================
+    // Word bank (search / browse by level / quick-add)
+    // wordbank.json lives next to index.html in the repo and is
+    // fetched fresh on every load. Schema: [{w, p, l, m}, ...]
+    // w=word, p=part of speech, l=CEFR level, m=Persian meaning
+    // ============================================================
+    let wordBank = [];
+    let bankSearchTerm = '';
+    let bankLevelFilter = 'all';
+    let bankVisibleCount = 50;
+    let addedWordsSet = new Set();
+
+    async function loadWordBank() {
+        try {
+            const res = await fetch('./wordbank.json', { cache: 'no-store' });
+            if (!res.ok) throw new Error('wordbank.json not found');
+            wordBank = await res.json();
+        } catch (e) {
+            console.warn('Word bank not loaded:', e.message);
+            wordBank = [];
+        }
+    }
+
+    async function refreshAddedWordsSet() {
+        const cards = await getAllCards();
+        addedWordsSet = new Set(
+            cards.filter(c => c.type === 'english' && c.word).map(c => c.word.toLowerCase())
+        );
+    }
+
+    function setAddMode(mode) {
+        document.querySelectorAll('#add-mode-toggle .seg-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.mode === mode);
+        });
+        document.getElementById('bank-panel').classList.toggle('hidden', mode !== 'bank');
+        document.getElementById('manual-panel').classList.toggle('hidden', mode === 'bank');
+        if (mode === 'bank') {
+            refreshAddedWordsSet().then(renderBankResults);
+        }
+    }
+
+    function setBankLevelFilter(level) {
+        bankLevelFilter = level;
+        bankVisibleCount = 50;
+        document.querySelectorAll('#bank-level-chips .chip').forEach(c => {
+            c.classList.toggle('active', c.dataset.level === level);
+        });
+        renderBankResults();
+    }
+
+    function onBankFilterChange() {
+        bankSearchTerm = document.getElementById('bank-search-input').value.trim().toLowerCase();
+        bankVisibleCount = 50;
+        renderBankResults();
+    }
+
+    function showMoreBankResults() {
+        bankVisibleCount += 50;
+        renderBankResults();
+    }
+
+    function getFilteredBankWords() {
+        return wordBank.filter(w => {
+            if (bankLevelFilter !== 'all' && w.l !== bankLevelFilter) return false;
+            if (bankSearchTerm) {
+                const hay = (w.w + ' ' + (w.m || '')).toLowerCase();
+                if (!hay.includes(bankSearchTerm)) return false;
+            }
+            return true;
+        });
+    }
+
+    function renderBankResults() {
+        const statusEl = document.getElementById('bank-status');
+        const resultsEl = document.getElementById('bank-results');
+        const moreWrap = document.getElementById('bank-load-more-wrap');
+
+        if (wordBank.length === 0) {
+            statusEl.innerHTML = 'بانک لغات هنوز به برنامه اضافه نشده. فایل <code>wordbank.json</code> رو کنار <code>index.html</code> در مخزن گیت‌هاب قرار بده.';
+            resultsEl.innerHTML = '';
+            moreWrap.classList.add('hidden');
+            return;
+        }
+
+        const filtered = getFilteredBankWords();
+        statusEl.textContent = `${filtered.length} کلمه پیدا شد`;
+
+        const visible = filtered.slice(0, bankVisibleCount);
+        const levelColors = { A1: 'var(--box5)', A2: 'var(--box4)', B1: 'var(--box3)', B2: 'var(--box2)', C1: 'var(--box1)', C2: 'var(--chinese)' };
+
+        resultsEl.innerHTML = visible.map(w => {
+            const already = addedWordsSet.has(String(w.w).toLowerCase());
+            const hasMeaning = !!w.m;
+            return `
+            <div class="list-item">
+                <span class="box-dot" style="background:${levelColors[w.l] || 'var(--ink-faint)'}"></span>
+                <div class="item-main">
+                    <div class="item-front">${escapeHtml(w.w)}</div>
+                    <div class="item-meaning">${escapeHtml(w.m || 'هنوز معنی فارسی ندارد')}</div>
+                    <div class="item-tags">
+                        <span class="tag en">${escapeHtml(w.l || '')}</span>
+                        ${w.p ? `<span class="tag en">${escapeHtml(w.p)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button data-action="bank-add" data-word="${escapeHtml(w.w)}" ${(already || !hasMeaning) ? 'disabled' : ''} aria-label="افزودن">${already ? '✅' : '➕'}</button>
+                </div>
+            </div>`;
+        }).join('');
+
+        moreWrap.classList.toggle('hidden', filtered.length <= bankVisibleCount);
+    }
+
+    document.getElementById('bank-results').addEventListener('click', async (e) => {
+        const btn = e.target.closest('button[data-action="bank-add"]');
+        if (!btn || btn.disabled) return;
+        const word = btn.dataset.word;
+        const entry = wordBank.find(w => w.w === word);
+        if (!entry || !entry.m) return;
+
+        btn.disabled = true;
+        await addCardToDB({
+            type: 'english',
+            box: 1,
+            nextReview: new Date().setHours(0, 0, 0, 0),
+            learnedCount: 0,
+            lastReviewDate: null,
+            imageUrl: null,
+            word: entry.w,
+            meaning: entry.m
+        });
+
+        addedWordsSet.add(entry.w.toLowerCase());
+        btn.textContent = '✅';
+        await loadReviewQueue();
+    });
+
+    // ============================================================
     // List / search / filter / edit / delete
     // ============================================================
     let listSearchTerm = '';
@@ -1255,6 +1425,7 @@
         initTheme();
         await loadReviewQueue();
         updateInputFields();
+        await loadWordBank();
     };
 </script>
 </body>
