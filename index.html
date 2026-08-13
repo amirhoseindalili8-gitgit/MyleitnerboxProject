@@ -1,586 +1,1261 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>یادگیرنده لایتنر هوشمند</title>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="icon.png">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        body {
-            font-family: 'Vazirmatn', sans-serif; /* فونت فارسی */
-            background-color: #f4f7f6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start; /* Start from top */
-            min-height: 100vh;
-            box-sizing: border-box;
-            padding-bottom: 60px; /* Space for potential footer */
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            margin-top: 20px;
-            box-sizing: border-box;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #0077cc;
-            margin-bottom: 20px;
-        }
-        .card {
-            background-color: #e8f4fd;
-            border: 1px solid #b3d9ff;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-            min-height: 150px; /* Minimum height for card */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
-        }
-        .card-content {
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            word-wrap: break-word;
-        }
-        .hidden {
-            display: none;
-        }
-        input[type="text"], textarea {
-            width: calc(100% - 20px); /* Adjust width considering padding */
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            box-sizing: border-box; /* Important for padding */
-        }
-        button {
-            background-color: #0077cc;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 1em;
-            cursor: pointer;
-            margin: 5px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #005fa3;
-        }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px; /* Space between buttons */
-            flex-wrap: wrap; /* Allow wrapping on small screens */
-        }
-        .small-button {
-            padding: 8px 12px;
-            font-size: 0.9em;
-            background-color: #6c757d;
-        }
-        .small-button:hover {
-            background-color: #5a6268;
-        }
-        .stats {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #555;
-        }
-        .hidden-input {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-        /* Styles for image upload preview */
-        .image-preview {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-            border-radius: 4px;
-            display: block; /* Center the image */
-        }
-    </style>
-    <!-- Vazirmatn Font -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/font-வேائرmatn/v33/font-face/font-face.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>یادگیرنده لایتنر هوشمند</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="manifest" href="manifest.json">
+
+<!-- Vazirmatn: فونت فارسی متن‌باز و کاملاً رایگان (SIL OFL) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    /* ============ Design tokens ============ */
+    :root{
+        --paper:#F2F4F3;
+        --surface:#FFFFFF;
+        --surface-2:#FAFBFA;
+        --ink:#1E232B;
+        --ink-soft:#5B6472;
+        --ink-faint:#8992A0;
+        --border:#E1E4E2;
+        --accent:#33506B;
+        --accent-ink:#FFFFFF;
+        --accent-soft:#E7EEF2;
+        --danger:#C0392B;
+        --danger-soft:#F8E7E5;
+        --english:#33506B;
+        --english-soft:#E7EEF2;
+        --chinese:#7A4E8C;
+        --chinese-soft:#F1E9F4;
+        --box1:#D6524A;
+        --box2:#E08A3C;
+        --box3:#D2A93B;
+        --box4:#4E9585;
+        --box5:#2E7A56;
+        --shadow:0 1px 3px rgba(20,25,30,.06), 0 8px 24px rgba(20,25,30,.05);
+        --radius-s:8px;
+        --radius-m:14px;
+        --radius-l:20px;
+    }
+    [data-theme="dark"]{
+        --paper:#14171C;
+        --surface:#1D2129;
+        --surface-2:#20242C;
+        --ink:#E7E9EC;
+        --ink-soft:#9AA3AD;
+        --ink-faint:#6B7480;
+        --border:#2A2F37;
+        --accent:#7FA6C4;
+        --accent-ink:#12181D;
+        --accent-soft:#232C34;
+        --danger:#E07A6E;
+        --danger-soft:#33201E;
+        --english:#7FA6C4;
+        --english-soft:#1E2C36;
+        --chinese:#C79EDA;
+        --chinese-soft:#2B2032;
+        --box1:#E2665D;
+        --box2:#EDA157;
+        --box3:#E0C761;
+        --box4:#63AC9B;
+        --box5:#3E9468;
+        --shadow:0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+        font-family:'Vazirmatn', sans-serif;
+        background:var(--paper);
+        color:var(--ink);
+        margin:0;
+        -webkit-tap-highlight-color:transparent;
+        transition:background .2s ease, color .2s ease;
+    }
+    button, input, select, textarea{ font-family:inherit; }
+
+    .app-shell{
+        max-width:600px;
+        margin:0 auto;
+        min-height:100vh;
+        display:flex;
+        flex-direction:column;
+        padding-bottom:calc(72px + env(safe-area-inset-bottom));
+    }
+
+    /* ============ Top bar ============ */
+    .topbar{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:18px 20px 10px;
+    }
+    .topbar h1{
+        font-size:1.15em;
+        font-weight:800;
+        margin:0;
+        letter-spacing:-.01em;
+    }
+    .icon-btn{
+        background:var(--surface);
+        border:1px solid var(--border);
+        color:var(--ink);
+        width:40px;
+        height:40px;
+        border-radius:50%;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:1.05em;
+        cursor:pointer;
+        box-shadow:var(--shadow);
+        margin:0;
+        padding:0;
+        transition:transform .15s ease;
+    }
+    .icon-btn:active{ transform:scale(.92); }
+
+    /* ============ Content / panels ============ */
+    .content{ flex:1; padding:0 16px; }
+    .tab-panel{ animation:fadeIn .18s ease; }
+    .tab-panel.hidden{ display:none; }
+    @keyframes fadeIn{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);} }
+
+    .panel-title{
+        font-size:.95em;
+        font-weight:700;
+        color:var(--ink-soft);
+        margin:8px 4px 12px;
+    }
+
+    .card-surface{
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:var(--radius-l);
+        box-shadow:var(--shadow);
+        padding:20px;
+        margin-bottom:16px;
+    }
+
+    /* ============ Segmented control (review type) ============ */
+    .segmented{
+        display:flex;
+        background:var(--surface-2);
+        border:1px solid var(--border);
+        border-radius:999px;
+        padding:4px;
+        margin-bottom:16px;
+        gap:4px;
+    }
+    .seg-btn{
+        flex:1;
+        border:none;
+        background:transparent;
+        color:var(--ink-soft);
+        padding:9px 8px;
+        border-radius:999px;
+        font-size:.88em;
+        font-weight:600;
+        cursor:pointer;
+    }
+    .seg-btn.active{
+        background:var(--accent);
+        color:var(--accent-ink);
+    }
+    .seg-btn[data-type="english"].active{ background:var(--english); }
+    .seg-btn[data-type="chinese"].active{ background:var(--chinese); }
+
+    /* ============ Review card ============ */
+    .mode-badge{
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
+        font-size:.78em;
+        font-weight:700;
+        padding:5px 12px;
+        border-radius:999px;
+        margin-bottom:12px;
+    }
+    .mode-badge.en{ background:var(--english-soft); color:var(--english); }
+    .mode-badge.zh{ background:var(--chinese-soft); color:var(--chinese); }
+
+    .review-card{
+        border-radius:var(--radius-l);
+        padding:28px 20px;
+        margin-bottom:16px;
+        min-height:170px;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        box-shadow:var(--shadow);
+        border:1px solid var(--border);
+        border-top:4px solid var(--accent);
+        transition:border-color .15s ease;
+    }
+    .review-card.en{ border-top-color:var(--english); background:var(--english-soft); }
+    .review-card.zh{ border-top-color:var(--chinese); background:var(--chinese-soft); }
+
+    .card-face-row{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        flex-wrap:wrap;
+    }
+    .card-front{ font-size:1.5em; font-weight:800; }
+    .card-back{
+        font-size:1.2em;
+        font-weight:600;
+        margin-top:14px;
+        padding-top:14px;
+        border-top:1px dashed var(--border);
+        width:100%;
+        animation:flipIn .25s ease;
+    }
+    @keyframes flipIn{ from{ opacity:0; transform:translateY(6px) scaleY(.96);} to{opacity:1; transform:translateY(0) scaleY(1);} }
+    .card-img{ max-width:100%; max-height:150px; border-radius:var(--radius-s); margin-top:12px; }
+
+    .speak-btn{
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:50%;
+        width:34px; height:34px;
+        display:inline-flex; align-items:center; justify-content:center;
+        cursor:pointer; font-size:.95em; padding:0; color:var(--ink);
+    }
+
+    .button-group{ display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:4px; }
+    .btn{
+        border:none;
+        border-radius:var(--radius-m);
+        padding:13px 20px;
+        font-size:.95em;
+        font-weight:700;
+        cursor:pointer;
+        transition:filter .15s ease, transform .1s ease;
+    }
+    .btn:active{ transform:scale(.97); }
+    .btn-primary{ background:var(--accent); color:var(--accent-ink); width:100%; }
+    .btn-success{ background:var(--box5); color:#fff; }
+    .btn-danger{ background:var(--danger); color:#fff; }
+    .btn-ghost{ background:var(--surface-2); color:var(--ink); border:1px solid var(--border); }
+    .btn-small{ padding:8px 14px; font-size:.85em; border-radius:var(--radius-s); }
+    .btn:hover{ filter:brightness(.96); }
+
+    .stats-line{ text-align:center; margin-top:16px; font-size:.85em; color:var(--ink-soft); }
+    .empty-state{ text-align:center; padding:30px 10px; }
+    .empty-state .emoji{ font-size:2.2em; display:block; margin-bottom:8px; }
+
+    /* ============ Add / edit form ============ */
+    .field{ margin-bottom:14px; }
+    .field label{ display:block; font-size:.85em; font-weight:600; color:var(--ink-soft); margin-bottom:6px; }
+    input[type="text"], select, textarea{
+        width:100%;
+        padding:12px 14px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-s);
+        font-size:1em;
+        background:var(--surface-2);
+        color:var(--ink);
+    }
+    input[type="file"]{ font-size:.85em; color:var(--ink-soft); }
+    .image-preview{ max-width:100%; max-height:150px; border-radius:var(--radius-s); margin-top:10px; display:block; }
+    .hidden{ display:none !important; }
+    .edit-banner{
+        background:var(--accent-soft);
+        color:var(--accent);
+        font-size:.85em;
+        font-weight:700;
+        padding:10px 14px;
+        border-radius:var(--radius-s);
+        margin-bottom:14px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+    }
+    .edit-banner button{ background:none; border:none; color:var(--accent); font-weight:700; cursor:pointer; text-decoration:underline; }
+
+    /* ============ List tab ============ */
+    .toolbar-row{ display:flex; gap:8px; margin-bottom:10px; }
+    .toolbar-row input[type="text"]{ margin:0; }
+    .chip-row{ display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px; }
+    .chip{
+        flex:none;
+        border:1px solid var(--border);
+        background:var(--surface);
+        color:var(--ink-soft);
+        padding:6px 13px;
+        border-radius:999px;
+        font-size:.8em;
+        font-weight:600;
+        cursor:pointer;
+        white-space:nowrap;
+    }
+    .chip.active{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+
+    .list-item{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:var(--radius-m);
+        padding:12px 14px;
+        margin-bottom:8px;
+    }
+    .list-item .box-dot{
+        width:10px; height:10px; border-radius:50%; flex:none;
+    }
+    .list-item .item-main{ flex:1; min-width:0; }
+    .list-item .item-front{ font-weight:700; font-size:.98em; }
+    .list-item .item-meaning{ font-size:.83em; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .list-item .item-tags{ display:flex; gap:5px; margin-top:4px; }
+    .tag{ font-size:.7em; font-weight:700; padding:2px 8px; border-radius:999px; }
+    .tag.en{ background:var(--english-soft); color:var(--english); }
+    .tag.zh{ background:var(--chinese-soft); color:var(--chinese); }
+    .tag.due{ background:var(--danger-soft); color:var(--danger); }
+    .item-actions{ display:flex; gap:6px; flex:none; }
+    .item-actions button{
+        background:var(--surface-2);
+        border:1px solid var(--border);
+        width:32px; height:32px; border-radius:50%;
+        cursor:pointer; font-size:.9em; padding:0;
+    }
+    .list-footer-actions{ display:flex; gap:10px; margin-top:16px; }
+    .list-footer-actions .btn{ flex:1; }
+
+    /* ============ Stats tab ============ */
+    .stat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+    .stat-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:14px; text-align:center; }
+    .stat-card .num{ font-size:1.6em; font-weight:800; color:var(--accent); }
+    .stat-card .label{ font-size:.78em; color:var(--ink-soft); margin-top:2px; }
+
+    .drawers{ display:flex; flex-direction:column; gap:10px; }
+    .drawer-row{ display:flex; align-items:center; gap:10px; }
+    .drawer-label{ width:58px; flex:none; font-size:.8em; font-weight:700; color:var(--ink-soft); }
+    .drawer-track{ flex:1; background:var(--surface-2); border:1px solid var(--border); border-radius:999px; height:26px; overflow:hidden; position:relative; }
+    .drawer-fill{ height:100%; border-radius:999px 0 0 999px; display:flex; align-items:center; transition:width .4s ease; min-width:26px; }
+    .drawer-count{ font-size:.75em; font-weight:800; color:#fff; padding:0 10px; white-space:nowrap; }
+
+    /* ============ Tab bar ============ */
+    .tabbar{
+        position:fixed;
+        bottom:0; left:0; right:0;
+        max-width:600px;
+        margin:0 auto;
+        background:var(--surface);
+        border-top:1px solid var(--border);
+        display:flex;
+        padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+        box-shadow:0 -2px 12px rgba(0,0,0,.05);
+    }
+    .tab-btn{
+        flex:1;
+        background:none;
+        border:none;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:3px;
+        padding:6px 0;
+        color:var(--ink-faint);
+        font-size:.7em;
+        font-weight:700;
+        cursor:pointer;
+        border-radius:var(--radius-s);
+    }
+    .tab-btn .tab-icon{ font-size:1.25em; }
+    .tab-btn.active{ color:var(--accent); }
+
+    .help-box{ font-size:.83em; color:var(--ink-soft); line-height:1.9; }
+    .help-box strong{ color:var(--ink); }
+
+    ::selection{ background:var(--accent-soft); }
+</style>
 </head>
 <body>
-    <div class="container">
+<div class="app-shell">
+    <div class="topbar">
         <h1>یادگیرنده لایتنر هوشمند</h1>
-        <div id="app">
-            <!-- Add Card Section -->
-            <div id="add-card-section">
-                <h2>کارت جدید اضافه کنید</h2>
-                <label for="card-type">نوع کارت:</label>
-                <select id="card-type" onchange="updateInputFields()">
-                    <option value="english">انگلیسی (معنی فارسی)</option>
-                    <option value="chinese">چینی/مفهومی (با تصویر)</option>
-                </select>
-                <br><br>
+        <button class="icon-btn" id="theme-toggle" aria-label="تغییر تم" onclick="toggleTheme()">🌙</button>
+    </div>
+
+    <div class="content">
+        <!-- ===================== REVIEW TAB ===================== -->
+        <section id="tab-review" class="tab-panel">
+            <div class="segmented" id="review-type-toggle">
+                <button class="seg-btn" data-type="english" onclick="setReviewType('english')">انگلیسی</button>
+                <button class="seg-btn" data-type="chinese" onclick="setReviewType('chinese')">چینی و مفاهیم</button>
+            </div>
+
+            <div id="mode-badge-wrap"></div>
+
+            <div id="current-card" class="review-card">
+                <div class="card-face-row">
+                    <div class="card-content card-front" id="card-front"></div>
+                    <button id="speak-front-btn" class="speak-btn hidden" onclick="speakCurrentWord()" aria-label="پخش تلفظ">🔊</button>
+                </div>
+                <div class="card-content card-back hidden" id="card-back"></div>
+            </div>
+
+            <div class="button-group">
+                <button id="show-answer-btn" class="btn btn-primary" onclick="showAnswer()" style="display:none;">نمایش پاسخ</button>
+                <button id="got-it-btn" class="btn btn-success btn-small" onclick="handleAnswer(true)" style="display:none;">یادم بود!</button>
+                <button id="did-not-get-it-btn" class="btn btn-danger btn-small" onclick="handleAnswer(false)" style="display:none;">اشتباه گفتم!</button>
+                <button id="type-english-btn" class="btn btn-primary btn-small" onclick="handleAnswer(true, true)" style="display:none;">یادم بود! (تایپ انگلیسی)</button>
+            </div>
+            <div class="stats" id="stats"></div>
+        </section>
+
+        <!-- ===================== ADD / EDIT TAB ===================== -->
+        <section id="tab-add" class="tab-panel hidden">
+            <div id="edit-banner" class="edit-banner hidden">
+                <span>در حال ویرایش کارت</span>
+                <button onclick="cancelEdit()">لغو</button>
+            </div>
+
+            <div class="card-surface">
+                <div class="field">
+                    <label for="card-type">نوع کارت</label>
+                    <select id="card-type" onchange="updateInputFields()">
+                        <option value="english">انگلیسی (معنی فارسی)</option>
+                        <option value="chinese">چینی/مفهومی (با تصویر)</option>
+                    </select>
+                </div>
 
                 <div id="english-fields">
-                    <label for="english-word">کلمه انگلیسی:</label>
-                    <input type="text" id="english-word" placeholder="مثال: apple">
-                    <label for="english-meaning">معنی فارسی:</label>
-                    <input type="text" id="english-meaning" placeholder="مثال: سیب">
-                    <label for="english-image">تصویر (اختیاری):</label>
-                    <input type="file" id="english-image" accept="image/*" onchange="previewImage(event, 'english')">
-                    <img id="english-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                    <div class="field">
+                        <label for="english-word">کلمه انگلیسی</label>
+                        <input type="text" id="english-word" placeholder="مثال: apple">
+                    </div>
+                    <div class="field">
+                        <label for="english-meaning">معنی فارسی</label>
+                        <input type="text" id="english-meaning" placeholder="مثال: سیب">
+                    </div>
+                    <div class="field">
+                        <label for="english-image">تصویر (اختیاری)</label>
+                        <input type="file" id="english-image" accept="image/*" onchange="previewImage(event, 'english')">
+                        <img id="english-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                    </div>
                 </div>
 
                 <div id="chinese-fields" class="hidden">
-                    <label for="chinese-char">کاراکتر/مفهوم:</label>
-                    <input type="text" id="chinese-char" placeholder="مثال: 你好 یا فلسفه">
-                    <label for="chinese-meaning">معنی:</label>
-                    <input type="text" id="chinese-meaning" placeholder="مثال: سلام یا هستی">
-                    <label for="chinese-image">تصویر (اختیاری - مثلاً نقشه ذهنی):</label>
-                    <input type="file" id="chinese-image" accept="image/*" onchange="previewImage(event, 'chinese')">
-                    <img id="chinese-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                    <div class="field">
+                        <label for="chinese-char">کاراکتر/مفهوم</label>
+                        <input type="text" id="chinese-char" placeholder="مثال: 你好 یا فلسفه">
+                    </div>
+                    <div class="field">
+                        <label for="chinese-meaning">معنی</label>
+                        <input type="text" id="chinese-meaning" placeholder="مثال: سلام یا هستی">
+                    </div>
+                    <div class="field">
+                        <label for="chinese-image">تصویر (اختیاری - مثلاً نقشه ذهنی)</label>
+                        <input type="file" id="chinese-image" accept="image/*" onchange="previewImage(event, 'chinese')">
+                        <img id="chinese-preview" src="#" alt="Image Preview" class="image-preview hidden">
+                    </div>
                 </div>
 
-                <button onclick="addCard()">افزودن کارت</button>
+                <button class="btn btn-primary" id="save-card-btn" onclick="saveCard()">افزودن کارت</button>
+            </div>
+        </section>
+
+        <!-- ===================== LIST TAB ===================== -->
+        <section id="tab-list" class="tab-panel hidden">
+            <div class="toolbar-row">
+                <input type="text" id="search-input" placeholder="جستجو در کلمه یا معنی..." oninput="renderCardList()">
+            </div>
+            <div class="chip-row" id="type-chips">
+                <button class="chip active" data-type="all" onclick="setListTypeFilter('all')">همه</button>
+                <button class="chip" data-type="english" onclick="setListTypeFilter('english')">انگلیسی</button>
+                <button class="chip" data-type="chinese" onclick="setListTypeFilter('chinese')">چینی/مفهومی</button>
+            </div>
+            <div class="chip-row" id="box-chips">
+                <button class="chip active" data-box="all" onclick="setListBoxFilter('all')">همه جعبه‌ها</button>
+                <button class="chip" data-box="1" onclick="setListBoxFilter(1)">جعبه ۱</button>
+                <button class="chip" data-box="2" onclick="setListBoxFilter(2)">جعبه ۲</button>
+                <button class="chip" data-box="3" onclick="setListBoxFilter(3)">جعبه ۳</button>
+                <button class="chip" data-box="4" onclick="setListBoxFilter(4)">جعبه ۴</button>
+                <button class="chip" data-box="5" onclick="setListBoxFilter(5)">جعبه ۵</button>
             </div>
 
-            <hr>
+            <div id="card-list"></div>
 
-            <!-- Review Section -->
-            <div id="review-section">
-                <h2>مرور کارت‌ها</h2>
-                <div id="current-card" class="card">
-                    <div class="card-content" id="card-front"></div>
-                    <div class="card-content hidden" id="card-back"></div>
-                </div>
-                <div class="button-group">
-                    <button id="show-answer-btn" onclick="showAnswer()" style="display: none;">نمایش پاسخ</button>
-                    <button id="got-it-btn" class="small-button" onclick="handleAnswer(true)" style="display: none;">یادم بود!</button>
-                    <button id="did-not-get-it-btn" class="small-button" onclick="handleAnswer(false)" style="display: none;">اشتباه گفتم!</button>
-                    <button id="type-english-btn" onclick="handleAnswer(true, true)" style="display: none;">یادم بود! (تایپ انگلیسی)</button>
-                </div>
-                <div class="stats" id="stats"></div>
+            <div class="list-footer-actions">
+                <button class="btn btn-ghost" onclick="exportToCSV()">⬇️ خروجی CSV</button>
+                <button class="btn btn-ghost" onclick="document.getElementById('import-file-input').click()">⬆️ ورودی CSV</button>
+                <input type="file" id="import-file-input" accept=".csv" class="hidden" onchange="importFromCSV(event)">
             </div>
-        </div>
+        </section>
+
+        <!-- ===================== STATS TAB ===================== -->
+        <section id="tab-stats" class="tab-panel hidden">
+            <div class="stat-grid" id="stat-grid"></div>
+            <div class="panel-title">توزیع کارت‌ها در جعبه‌ها</div>
+            <div class="card-surface">
+                <div class="drawers" id="drawers"></div>
+            </div>
+            <div class="card-surface help-box">
+                <strong>نحوه استفاده:</strong><br>
+                ۱. کارت جدید اضافه کنید (انگلیسی یا چینی/مفهومی).<br>
+                ۲. در بخش «مرور»، بین کلمات انگلیسی و چینی/مفاهیم جابجا شوید و کارت‌های آماده مرور را انجام دهید.<br>
+                ۳. برای هر کارت، ابتدا معنی را حدس بزنید، سپس «نمایش پاسخ» را بزنید.<br>
+                ۴. بعد از دیدن پاسخ، «یادم بود» یا «اشتباه گفتم» را انتخاب کنید تا کارت بین جعبه‌ها جابجا شود.<br>
+                ۵. در بخش «لیست» می‌توانید همه‌ی لغات را ببینید، جستجو، ویرایش یا حذف کنید.<br>
+                ۶. برای پشتیبان‌گیری از «خروجی CSV» و برای بازیابی از «ورودی CSV» استفاده کنید.
+            </div>
+        </section>
     </div>
 
-    <script>
-        // --- Database Operations (IndexedDB) ---
-        let db;
-        const DB_NAME = 'lightnerDB';
-        const STORE_NAME = 'cards';
-        const DB_VERSION = 1;
+    <nav class="tabbar">
+        <button class="tab-btn active" data-tab="review" onclick="switchTab('review')">
+            <span class="tab-icon">🗂️</span>مرور
+        </button>
+        <button class="tab-btn" data-tab="add" onclick="switchTab('add')">
+            <span class="tab-icon">➕</span>افزودن
+        </button>
+        <button class="tab-btn" data-tab="list" onclick="switchTab('list')">
+            <span class="tab-icon">📋</span>لیست
+        </button>
+        <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">
+            <span class="tab-icon">📊</span>آمار
+        </button>
+    </nav>
+</div>
 
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, DB_VERSION);
-                request.onerror = (event) => {
-                    console.error("Error opening database:", event.target.error);
-                    reject("Could not open database");
-                };
-                request.onsuccess = (event) => {
-                    db = event.target.result;
-                    resolve();
-                };
-                request.onupgradeneeded = (event) => {
-                    db = event.target.result;
-                    if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-                        objectStore.createIndex('nextReview', 'nextReview');
-                        objectStore.createIndex('box', 'box');
-                        console.log("Object store created");
-                    }
-                };
-            });
-        }
+<script>
+    // ============================================================
+    // Database Operations (IndexedDB) — schema unchanged
+    // ============================================================
+    let db;
+    const DB_NAME = 'lightnerDB';
+    const STORE_NAME = 'cards';
+    const DB_VERSION = 1;
 
-        function getCardsToReview() {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const today = new Date().setHours(0, 0, 0, 0);
-                const request = store.index('nextReview').getAll(IDBKeyRange.upperBound(today));
-
-                request.onsuccess = (event) => {
-                    resolve(event.target.result);
-                };
-                request.onerror = (event) => {
-                    console.error("Error fetching cards:", event.target.error);
-                    reject("Could not fetch cards");
-                };
-            });
-        }
-
-        function addCardToDB(card) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.add(card);
-                request.onsuccess = (event) => {
-                    resolve(event.target.result);
-                };
-                request.onerror = (event) => {
-                    console.error("Error adding card:", event.target.error);
-                    reject("Could not add card");
-                };
-            });
-        }
-
-        function updateCardInDB(card) {
-            return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readwrite');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.put(card); // Use put to update
-                request.onsuccess = () => {
-                    resolve();
-                };
-                request.onerror = (event) => {
-                    console.error("Error updating card:", event.target.error);
-                    reject("Could not update card");
-                };
-            });
-        }
-
-        function getAllCards() {
-             return new Promise((resolve, reject) => {
-                const transaction = db.transaction([STORE_NAME], 'readonly');
-                const store = transaction.objectStore(STORE_NAME);
-                const request = store.getAll();
-                request.onsuccess = (event) => {
-                    resolve(event.target.result);
-                };
-                request.onerror = (event) => {
-                    console.error("Error getting all cards:", event.target.error);
-                    reject("Could not get all cards");
-                };
-            });
-        }
-
-        // --- UI Logic ---
-        let currentCard = null;
-        let isAnswerShown = false;
-        let reviewMode = 'recognition'; // 'recognition' or 'production'
-        let cardsForReview = [];
-        let currentCardIndex = 0;
-
-        const BOX_INTERVALS = [0, 1, 2, 4, 8, 15]; // Intervals in days for boxes 1 to 5
-
-        function calculateNextReview(box) {
-            const interval = BOX_INTERVALS[box];
-            const today = new Date();
-            const nextReviewDate = new Date(today.setDate(today.getDate() + interval));
-            return nextReviewDate.setHours(0, 0, 0, 0); // Normalize to start of day
-        }
-
-        function updateCardDisplay() {
-            const cardFrontEl = document.getElementById('card-front');
-            const cardBackEl = document.getElementById('card-back');
-            const showAnswerBtn = document.getElementById('show-answer-btn');
-            const gotItBtn = document.getElementById('got-it-btn');
-            const didNotGetItBtn = document.getElementById('did-not-get-it-btn');
-            const typeEnglishBtn = document.getElementById('type-english-btn');
-            const cardEl = document.getElementById('current-card');
-            const statsEl = document.getElementById('stats');
-
-            cardFrontEl.innerHTML = '';
-            cardBackEl.innerHTML = '';
-            cardBackEl.classList.add('hidden');
-            showAnswerBtn.style.display = 'none';
-            gotItBtn.style.display = 'none';
-            didNotGetItBtn.style.display = 'none';
-            typeEnglishBtn.style.display = 'none';
-            cardEl.style.minHeight = '150px'; // Reset min-height
-
-            if (currentCard) {
-                cardEl.style.minHeight = 'auto'; // Allow card to resize if content is large
-                if (currentCard.type === 'english') {
-                    cardFrontEl.innerHTML = `<strong>${currentCard.word}</strong>`;
-                    cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
-                    if (currentCard.imageUrl) {
-                        cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="image-preview" style="max-height: 150px; margin-top: 10px;">`;
-                    }
-                    showAnswerBtn.style.display = 'block';
-                } else { // chinese or concept
-                    cardFrontEl.innerHTML = `<strong>${currentCard.char}</strong>`;
-                    cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
-                     if (currentCard.imageUrl) {
-                        cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="image-preview" style="max-height: 150px; margin-top: 10px;">`;
-                    }
-                    showAnswerBtn.style.display = 'block';
+    function openDB() {
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(DB_NAME, DB_VERSION);
+            request.onerror = (event) => {
+                console.error("Error opening database:", event.target.error);
+                reject("Could not open database");
+            };
+            request.onsuccess = (event) => {
+                db = event.target.result;
+                resolve();
+            };
+            request.onupgradeneeded = (event) => {
+                db = event.target.result;
+                if (!db.objectStoreNames.contains(STORE_NAME)) {
+                    const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                    objectStore.createIndex('nextReview', 'nextReview');
+                    objectStore.createIndex('box', 'box');
+                    console.log("Object store created");
                 }
-                updateStats();
-            } else {
-                cardFrontEl.textContent = "همه کارت‌های امروز مرور شدند!";
-                statsEl.textContent = "آفرین! استراحت کن.";
-            }
-        }
-        
-        function updateStats() {
-            const statsEl = document.getElementById('stats');
-            let statsText = `کارت فعلی: ${currentCardIndex + 1}/${cardsForReview.length} | `;
-            statsText += `جعبه ${currentCard.box} | `;
-            statsText += `نوع: ${currentCard.type === 'english' ? 'انگلیسی' : 'چینی/مفهومی'}`;
-            statsEl.textContent = statsText;
-        }
+            };
+        });
+    }
 
-        function showAnswer() {
-            isAnswerShown = true;
-            document.getElementById('card-back').classList.remove('hidden');
-            document.getElementById('show-answer-btn').style.display = 'none';
+    function getCardsToReview() {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const today = new Date().setHours(0, 0, 0, 0);
+            const request = store.index('nextReview').getAll(IDBKeyRange.upperBound(today));
 
-            // Decide which buttons to show next based on card type and review mode
+            request.onsuccess = (event) => resolve(event.target.result);
+            request.onerror = (event) => {
+                console.error("Error fetching cards:", event.target.error);
+                reject("Could not fetch cards");
+            };
+        });
+    }
+
+    function addCardToDB(card) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.add(card);
+            request.onsuccess = (event) => resolve(event.target.result);
+            request.onerror = (event) => {
+                console.error("Error adding card:", event.target.error);
+                reject("Could not add card");
+            };
+        });
+    }
+
+    function updateCardInDB(card) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.put(card);
+            request.onsuccess = () => resolve();
+            request.onerror = (event) => {
+                console.error("Error updating card:", event.target.error);
+                reject("Could not update card");
+            };
+        });
+    }
+
+    function deleteCardFromDB(id) {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.delete(id);
+            request.onsuccess = () => resolve();
+            request.onerror = (event) => {
+                console.error("Error deleting card:", event.target.error);
+                reject("Could not delete card");
+            };
+        });
+    }
+
+    function getAllCards() {
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            request.onsuccess = (event) => resolve(event.target.result);
+            request.onerror = (event) => {
+                console.error("Error getting all cards:", event.target.error);
+                reject("Could not get all cards");
+            };
+        });
+    }
+
+    // ============================================================
+    // Review logic
+    // ============================================================
+    let currentCard = null;
+    let isAnswerShown = false;
+    let allDueCards = [];       // all due cards, unfiltered by type
+    let cardsForReview = [];    // due cards filtered by currentReviewType
+    let currentCardIndex = 0;
+    let currentReviewType = localStorage.getItem('reviewType') || 'english';
+
+    const BOX_INTERVALS = [0, 1, 2, 4, 8, 15]; // Intervals in days for boxes 1 to 5
+
+    function calculateNextReview(box) {
+        const interval = BOX_INTERVALS[box];
+        const today = new Date();
+        const nextReviewDate = new Date(today.setDate(today.getDate() + interval));
+        return nextReviewDate.setHours(0, 0, 0, 0);
+    }
+
+    function setReviewType(type) {
+        currentReviewType = type;
+        localStorage.setItem('reviewType', type);
+        document.querySelectorAll('#review-type-toggle .seg-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.type === type);
+        });
+        applyReviewTypeFilter();
+    }
+
+    function applyReviewTypeFilter() {
+        cardsForReview = allDueCards
+            .filter(c => c.type === currentReviewType)
+            .sort((a, b) => a.nextReview - b.nextReview);
+        currentCardIndex = 0;
+        renderModeBadge();
+        loadNextCard();
+    }
+
+    function renderModeBadge() {
+        const wrap = document.getElementById('mode-badge-wrap');
+        const enCount = allDueCards.filter(c => c.type === 'english').length;
+        const zhCount = allDueCards.filter(c => c.type === 'chinese').length;
+        if (currentReviewType === 'english') {
+            wrap.innerHTML = `<span class="mode-badge en">در حال مرور کلمات انگلیسی — ${enCount} مورد در صف</span>`;
+        } else {
+            wrap.innerHTML = `<span class="mode-badge zh">در حال مرور چینی/مفاهیم — ${zhCount} مورد در صف</span>`;
+        }
+    }
+
+    function updateCardDisplay() {
+        const cardFrontEl = document.getElementById('card-front');
+        const cardBackEl = document.getElementById('card-back');
+        const showAnswerBtn = document.getElementById('show-answer-btn');
+        const gotItBtn = document.getElementById('got-it-btn');
+        const didNotGetItBtn = document.getElementById('did-not-get-it-btn');
+        const typeEnglishBtn = document.getElementById('type-english-btn');
+        const cardEl = document.getElementById('current-card');
+        const statsEl = document.getElementById('stats');
+        const speakBtn = document.getElementById('speak-front-btn');
+
+        cardFrontEl.innerHTML = '';
+        cardBackEl.innerHTML = '';
+        cardBackEl.classList.add('hidden');
+        showAnswerBtn.style.display = 'none';
+        gotItBtn.style.display = 'none';
+        didNotGetItBtn.style.display = 'none';
+        typeEnglishBtn.style.display = 'none';
+        speakBtn.classList.add('hidden');
+        cardEl.classList.remove('en', 'zh');
+
+        if (currentCard) {
+            cardEl.classList.add(currentCard.type === 'english' ? 'en' : 'zh');
             if (currentCard.type === 'english') {
-                if (currentCard.learnedCount >= 1 && Math.random() < 0.2) { // 20% chance for production mode after 1st review
-                    document.getElementById('type-english-btn').style.display = 'block';
-                } else {
-                    document.getElementById('got-it-btn').style.display = 'block';
-                    document.getElementById('did-not-get-it-btn').style.display = 'block';
+                cardFrontEl.innerHTML = `<strong>${currentCard.word}</strong>`;
+                cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
+                if (currentCard.imageUrl) {
+                    cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="card-img">`;
                 }
-            } else { // Chinese/Concept
-                document.getElementById('got-it-btn').style.display = 'block';
-                document.getElementById('did-not-get-it-btn').style.display = 'block';
-            }
-        }
-
-        async function handleAnswer(isCorrect, isProductionMode = false) {
-            if (!currentCard) return;
-
-            let nextBox = currentCard.box;
-            let nextReviewDate = currentCard.nextReview;
-            let learnedCount = currentCard.learnedCount || 0;
-
-            if (isCorrect) {
-                if (currentCard.box < 5) {
-                    nextBox = currentCard.box + 1;
-                    nextReviewDate = calculateNextReview(nextBox);
-                } else {
-                    // Card is already in the final box, no further progression in boxes
-                    // Reset interval to a longer duration or keep it as is if it means "mastered"
-                    nextReviewDate = calculateNextReview(5); // Keep reviewing every 15 days, or you can set it to a much longer period.
+                if (window.speechSynthesis) speakBtn.classList.remove('hidden');
+            } else {
+                cardFrontEl.innerHTML = `<strong>${currentCard.char}</strong>`;
+                cardBackEl.innerHTML = `<strong>${currentCard.meaning}</strong>`;
+                if (currentCard.imageUrl) {
+                    cardBackEl.innerHTML += `<br><img src="${currentCard.imageUrl}" alt="Card Image" class="card-img">`;
                 }
-                learnedCount++;
+            }
+            showAnswerBtn.style.display = 'inline-block';
+            updateStats();
+        } else {
+            cardFrontEl.innerHTML = `<div class="empty-state"><span class="emoji">🎉</span>همه کارت‌های این دسته برای امروز مرور شدند!</div>`;
+            statsEl.textContent = 'آفرین! استراحت کن، یا از بالا نوع دیگری را برای مرور انتخاب کن.';
+        }
+    }
+
+    function updateStats() {
+        const statsEl = document.getElementById('stats');
+        let statsText = `کارت فعلی: ${currentCardIndex + 1}/${cardsForReview.length} | `;
+        statsText += `جعبه ${currentCard.box} | `;
+        statsText += `نوع: ${currentCard.type === 'english' ? 'انگلیسی' : 'چینی/مفهومی'}`;
+        statsEl.textContent = statsText;
+    }
+
+    function speakCurrentWord() {
+        if (!currentCard || currentCard.type !== 'english' || !window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(currentCard.word);
+        utterance.lang = 'en-US';
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function showAnswer() {
+        isAnswerShown = true;
+        document.getElementById('card-back').classList.remove('hidden');
+        document.getElementById('show-answer-btn').style.display = 'none';
+
+        if (currentCard.type === 'english') {
+            if (currentCard.learnedCount >= 1 && Math.random() < 0.2) {
+                document.getElementById('type-english-btn').style.display = 'inline-block';
             } else {
-                nextBox = 1; // Reset to box 1
-                nextReviewDate = calculateNextReview(1); // Review tomorrow
-                learnedCount = 0; // Reset learned count on error
+                document.getElementById('got-it-btn').style.display = 'inline-block';
+                document.getElementById('did-not-get-it-btn').style.display = 'inline-block';
             }
-
-            // Handle production mode specific logic
-            if (isProductionMode && isCorrect) {
-                 // If it was in production mode and correct, it should still progress
-                 // The logic above already handled correct answer progression
-            } else if (isProductionMode && !isCorrect) {
-                // If production mode was triggered but answer was incorrect
-                nextBox = 1;
-                nextReviewDate = calculateNextReview(1);
-                learnedCount = 0;
-            }
-
-            currentCard.box = nextBox;
-            currentCard.nextReview = nextReviewDate;
-            currentCard.learnedCount = learnedCount;
-            currentCard.lastReviewDate = new Date().setHours(0,0,0,0); // Mark current review date
-
-            await updateCardInDB(currentCard);
-
-            // Move to the next card
-            currentCardIndex++;
-            loadNextCard();
+        } else {
+            document.getElementById('got-it-btn').style.display = 'inline-block';
+            document.getElementById('did-not-get-it-btn').style.display = 'inline-block';
         }
+    }
 
-        function loadNextCard() {
-            isAnswerShown = false;
-            if (currentCardIndex < cardsForReview.length) {
-                currentCard = cardsForReview[currentCardIndex];
-                updateCardDisplay();
+    async function handleAnswer(isCorrect, isProductionMode = false) {
+        if (!currentCard) return;
+
+        let nextBox = currentCard.box;
+        let nextReviewDate = currentCard.nextReview;
+        let learnedCount = currentCard.learnedCount || 0;
+
+        if (isCorrect) {
+            if (currentCard.box < 5) {
+                nextBox = currentCard.box + 1;
+                nextReviewDate = calculateNextReview(nextBox);
             } else {
-                currentCard = null;
-                updateCardDisplay();
+                nextReviewDate = calculateNextReview(5);
             }
+            learnedCount++;
+        } else {
+            nextBox = 1;
+            nextReviewDate = calculateNextReview(1);
+            learnedCount = 0;
         }
 
-        function updateInputFields() {
-            const cardType = document.getElementById('card-type').value;
-            document.getElementById('english-fields').classList.toggle('hidden', cardType !== 'english');
-            document.getElementById('chinese-fields').classList.toggle('hidden', cardType !== 'chinese');
+        if (isProductionMode && !isCorrect) {
+            nextBox = 1;
+            nextReviewDate = calculateNextReview(1);
+            learnedCount = 0;
         }
 
-        function previewImage(event, type) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const previewId = type === 'english' ? 'english-preview' : 'chinese-preview';
-                const img = document.getElementById(previewId);
-                img.src = reader.result;
-                img.classList.remove('hidden');
-            }
-            reader.readAsDataURL(event.target.files[0]);
+        currentCard.box = nextBox;
+        currentCard.nextReview = nextReviewDate;
+        currentCard.learnedCount = learnedCount;
+        currentCard.lastReviewDate = new Date().setHours(0, 0, 0, 0);
+
+        await updateCardInDB(currentCard);
+
+        currentCardIndex++;
+        loadNextCard();
+    }
+
+    function loadNextCard() {
+        isAnswerShown = false;
+        if (currentCardIndex < cardsForReview.length) {
+            currentCard = cardsForReview[currentCardIndex];
+            updateCardDisplay();
+        } else {
+            currentCard = null;
+            updateCardDisplay();
         }
-        
-        function getBase64Image(imgElement) {
-            if (!imgElement || !imgElement.src || imgElement.src.startsWith('#')) return null;
-            // If the src is already a data URL, return it. Otherwise, it's an error or needs further processing (which is complex in plain JS without server)
-            // For simplicity, we assume it's already a data URL if it has a src.
-            if (imgElement.src.startsWith('data:image')) {
-                return imgElement.src;
+    }
+
+    async function loadReviewQueue() {
+        await openDB();
+        allDueCards = await getCardsToReview();
+        document.querySelectorAll('#review-type-toggle .seg-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.type === currentReviewType);
+        });
+        applyReviewTypeFilter();
+    }
+
+    // ============================================================
+    // Add / edit card
+    // ============================================================
+    let editingCard = null; // holds the original card object while editing, else null
+
+    function updateInputFields() {
+        const cardType = document.getElementById('card-type').value;
+        document.getElementById('english-fields').classList.toggle('hidden', cardType !== 'english');
+        document.getElementById('chinese-fields').classList.toggle('hidden', cardType !== 'chinese');
+    }
+
+    function previewImage(event, type) {
+        if (!event.target.files || !event.target.files[0]) return;
+        const reader = new FileReader();
+        reader.onload = function () {
+            const previewId = type === 'english' ? 'english-preview' : 'chinese-preview';
+            const img = document.getElementById(previewId);
+            img.src = reader.result;
+            img.classList.remove('hidden');
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function getBase64Image(imgElement) {
+        if (!imgElement || !imgElement.src || imgElement.src.endsWith('#')) return null;
+        if (imgElement.src.startsWith('data:image')) return imgElement.src;
+        return null;
+    }
+
+    function clearAddForm() {
+        document.getElementById('english-word').value = '';
+        document.getElementById('english-meaning').value = '';
+        document.getElementById('english-image').value = '';
+        document.getElementById('english-preview').src = '#';
+        document.getElementById('english-preview').classList.add('hidden');
+
+        document.getElementById('chinese-char').value = '';
+        document.getElementById('chinese-meaning').value = '';
+        document.getElementById('chinese-image').value = '';
+        document.getElementById('chinese-preview').src = '#';
+        document.getElementById('chinese-preview').classList.add('hidden');
+    }
+
+    function startEditCard(card) {
+        editingCard = card;
+        switchTab('add');
+        document.getElementById('edit-banner').classList.remove('hidden');
+        document.getElementById('save-card-btn').textContent = 'ذخیره تغییرات';
+
+        document.getElementById('card-type').value = card.type;
+        updateInputFields();
+
+        if (card.type === 'english') {
+            document.getElementById('english-word').value = card.word || '';
+            document.getElementById('english-meaning').value = card.meaning || '';
+            if (card.imageUrl) {
+                document.getElementById('english-preview').src = card.imageUrl;
+                document.getElementById('english-preview').classList.remove('hidden');
             }
-            return null; // Should not happen with FileReader logic
+        } else {
+            document.getElementById('chinese-char').value = card.char || '';
+            document.getElementById('chinese-meaning').value = card.meaning || '';
+            if (card.imageUrl) {
+                document.getElementById('chinese-preview').src = card.imageUrl;
+                document.getElementById('chinese-preview').classList.remove('hidden');
+            }
+        }
+    }
+
+    function cancelEdit() {
+        editingCard = null;
+        document.getElementById('edit-banner').classList.add('hidden');
+        document.getElementById('save-card-btn').textContent = 'افزودن کارت';
+        clearAddForm();
+    }
+
+    async function saveCard() {
+        const cardType = document.getElementById('card-type').value;
+        let word = '', meaning = '', char = '', imageUrl = null;
+
+        if (cardType === 'english') {
+            word = document.getElementById('english-word').value.trim();
+            meaning = document.getElementById('english-meaning').value.trim();
+            const previewImg = document.getElementById('english-preview');
+            imageUrl = getBase64Image(previewImg);
+        } else {
+            char = document.getElementById('chinese-char').value.trim();
+            meaning = document.getElementById('chinese-meaning').value.trim();
+            const previewImg = document.getElementById('chinese-preview');
+            imageUrl = getBase64Image(previewImg);
         }
 
-        async function addCard() {
-            const cardType = document.getElementById('card-type').value;
-            let cardData = {
+        if ((cardType === 'english' && !word) || (cardType !== 'english' && !char) || !meaning) {
+            alert('لطفاً تمام فیلدهای الزامی را پر کنید.');
+            return;
+        }
+
+        if (editingCard) {
+            editingCard.type = cardType;
+            if (cardType === 'english') {
+                editingCard.word = word;
+                editingCard.char = undefined;
+            } else {
+                editingCard.char = char;
+                editingCard.word = undefined;
+            }
+            editingCard.meaning = meaning;
+            if (imageUrl) editingCard.imageUrl = imageUrl;
+            await updateCardInDB(editingCard);
+            alert('کارت با موفقیت ویرایش شد!');
+            cancelEdit();
+        } else {
+            const cardData = {
                 type: cardType,
                 box: 1,
-                nextReview: new Date().setHours(0,0,0,0), // Review today
+                nextReview: new Date().setHours(0, 0, 0, 0),
                 learnedCount: 0,
-                lastReviewDate: null, // When it was last reviewed
-                imageUrl: null
+                lastReviewDate: null,
+                imageUrl: imageUrl,
+                word: cardType === 'english' ? word : undefined,
+                char: cardType !== 'english' ? char : undefined,
+                meaning: meaning
             };
-
-            if (cardType === 'english') {
-                cardData.word = document.getElementById('english-word').value.trim();
-                cardData.meaning = document.getElementById('english-meaning').value.trim();
-                const imageInput = document.getElementById('english-image');
-                const previewImg = document.getElementById('english-preview');
-                if (imageInput.files && imageInput.files[0]) {
-                    cardData.imageUrl = await getBase64Image(previewImg);
-                }
-            } else { // chinese or concept
-                cardData.char = document.getElementById('chinese-char').value.trim();
-                cardData.meaning = document.getElementById('chinese-meaning').value.trim();
-                 const imageInput = document.getElementById('chinese-image');
-                 const previewImg = document.getElementById('chinese-preview');
-                 if (imageInput.files && imageInput.files[0]) {
-                    cardData.imageUrl = await getBase64Image(previewImg);
-                }
-            }
-
-            if (!cardData.word && cardType === 'english' || !cardData.char && cardType !== 'english' || !cardData.meaning) {
-                alert("لطفاً تمام فیلدهای الزامی را پر کنید.");
-                return;
-            }
-
             await addCardToDB(cardData);
-            alert("کارت با موفقیت اضافه شد!");
-            
-            // Clear input fields
-            document.getElementById('english-word').value = '';
-            document.getElementById('english-meaning').value = '';
-            document.getElementById('english-image').value = '';
-            document.getElementById('english-preview').src = '#';
-            document.getElementById('english-preview').classList.add('hidden');
-
-            document.getElementById('chinese-char').value = '';
-            document.getElementById('chinese-meaning').value = '';
-            document.getElementById('chinese-image').value = '';
-            document.getElementById('chinese-preview').src = '#';
-            document.getElementById('chinese-preview').classList.add('hidden');
-
-            // Refresh review queue if needed
-            await loadReviewQueue();
+            alert('کارت با موفقیت اضافه شد!');
+            clearAddForm();
         }
 
-        async function exportToCSV() {
-            const cards = await getAllCards();
-            if (!cards || cards.length === 0) {
-                alert("هیچ کارتی برای خروجی گرفتن وجود ندارد.");
-                return;
+        await loadReviewQueue();
+        if (!document.getElementById('tab-list').classList.contains('hidden')) renderCardList();
+    }
+
+    // ============================================================
+    // List / search / filter / edit / delete
+    // ============================================================
+    let listSearchTerm = '';
+    let listTypeFilter = 'all';
+    let listBoxFilter = 'all';
+
+    function setListTypeFilter(type) {
+        listTypeFilter = type;
+        document.querySelectorAll('#type-chips .chip').forEach(c => c.classList.toggle('active', c.dataset.type === type));
+        renderCardList();
+    }
+
+    function setListBoxFilter(box) {
+        listBoxFilter = box;
+        document.querySelectorAll('#box-chips .chip').forEach(c => c.classList.toggle('active', String(c.dataset.box) === String(box)));
+        renderCardList();
+    }
+
+    async function renderCardList() {
+        listSearchTerm = document.getElementById('search-input').value.trim().toLowerCase();
+        const today = new Date().setHours(0, 0, 0, 0);
+        const cards = await getAllCards();
+
+        const filtered = cards.filter(c => {
+            if (listTypeFilter !== 'all' && c.type !== listTypeFilter) return false;
+            if (listBoxFilter !== 'all' && c.box !== Number(listBoxFilter)) return false;
+            if (listSearchTerm) {
+                const front = (c.type === 'english' ? c.word : c.char) || '';
+                const hay = (front + ' ' + (c.meaning || '')).toLowerCase();
+                if (!hay.includes(listSearchTerm)) return false;
             }
+            return true;
+        }).sort((a, b) => a.box - b.box || a.nextReview - b.nextReview);
 
-            let csvContent = "id,type,box,nextReview,learnedCount,lastReviewDate,word,meaning,imageUrl,char\n"; // Header
+        const listEl = document.getElementById('card-list');
+        if (filtered.length === 0) {
+            listEl.innerHTML = `<div class="empty-state"><span class="emoji">🔍</span>کارتی با این فیلتر پیدا نشد.</div>`;
+            return;
+        }
 
-            cards.forEach(card => {
-                // Escape commas and quotes in data
-                const escapeCSV = (text) => {
-                    if (typeof text !== 'string') text = String(text);
-                    return `"${text.replace(/"/g, '""')}"`; // Double quotes for quotes, wrap in double quotes
-                };
+        const boxColors = { 1: 'var(--box1)', 2: 'var(--box2)', 3: 'var(--box3)', 4: 'var(--box4)', 5: 'var(--box5)' };
 
-                csvContent += [
-                    escapeCSV(card.id),
-                    escapeCSV(card.type),
-                    escapeCSV(card.box),
-                    escapeCSV(card.nextReview ? new Date(card.nextReview).toISOString().split('T')[0] : ''), // Format date
-                    escapeCSV(card.learnedCount),
-                    escapeCSV(card.lastReviewDate ? new Date(card.lastReviewDate).toISOString().split('T')[0] : ''),
-                    escapeCSV(card.word || ''), // Handle undefined
-                    escapeCSV(card.meaning || ''),
-                    escapeCSV(card.imageUrl || ''),
-                    escapeCSV(card.char || '')
-                ].join(',') + '\n';
-            });
+        listEl.innerHTML = filtered.map(c => {
+            const front = c.type === 'english' ? c.word : c.char;
+            const isDue = c.nextReview <= today;
+            return `
+            <div class="list-item">
+                <span class="box-dot" style="background:${boxColors[c.box] || 'var(--ink-faint)'}"></span>
+                <div class="item-main">
+                    <div class="item-front">${escapeHtml(front || '')}</div>
+                    <div class="item-meaning">${escapeHtml(c.meaning || '')}</div>
+                    <div class="item-tags">
+                        <span class="tag ${c.type === 'english' ? 'en' : 'zh'}">${c.type === 'english' ? 'انگلیسی' : 'چینی/مفهومی'}</span>
+                        <span class="tag ${c.type === 'english' ? 'en' : 'zh'}">جعبه ${c.box}</span>
+                        ${isDue ? '<span class="tag due">آماده مرور</span>' : ''}
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button data-action="edit" data-id="${c.id}" aria-label="ویرایش">✏️</button>
+                    <button data-action="delete" data-id="${c.id}" aria-label="حذف">🗑️</button>
+                </div>
+            </div>`;
+        }).join('');
+    }
 
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            if (link.download) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", "lightner_cards.csv");
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, s => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+        }[s]));
+    }
+
+    document.getElementById('card-list').addEventListener('click', async (e) => {
+        const btn = e.target.closest('button[data-action]');
+        if (!btn) return;
+        const id = Number(btn.dataset.id);
+        const cards = await getAllCards();
+        const card = cards.find(c => c.id === id);
+        if (!card) return;
+
+        if (btn.dataset.action === 'edit') {
+            startEditCard(card);
+        } else if (btn.dataset.action === 'delete') {
+            if (confirm('این کارت برای همیشه حذف شود؟')) {
+                await deleteCardFromDB(id);
+                await renderCardList();
+                await loadReviewQueue();
             }
         }
+    });
 
-        async function loadReviewQueue() {
-            await openDB(); // Ensure DB is open
-            cardsForReview = await getCardsToReview();
-            cardsForReview.sort((a, b) => a.nextReview - b.nextReview); // Sort by next review date
-            currentCardIndex = 0;
-            loadNextCard();
+    // ============================================================
+    // CSV export / import
+    // ============================================================
+    async function exportToCSV() {
+        const cards = await getAllCards();
+        if (!cards || cards.length === 0) {
+            alert('هیچ کارتی برای خروجی گرفتن وجود ندارد.');
+            return;
         }
 
-        // --- Initial Load ---
-        window.onload = async () => {
-            await openDB();
-            await loadReviewQueue();
-            updateInputFields(); // Set initial fields based on default selection
-            
-            // Add export button dynamically
-            const container = document.querySelector('.container');
-            const exportBtn = document.createElement('button');
-            exportBtn.textContent = 'خروجی CSV';
-            exportBtn.onclick = exportToCSV;
-            exportBtn.style.marginTop = '20px';
-            exportBtn.style.display = 'block'; // Make it a block element
-            exportBtn.style.width = '100%';    // Full width
-            container.appendChild(exportBtn);
+        let csvContent = 'id,type,box,nextReview,learnedCount,lastReviewDate,word,meaning,imageUrl,char\n';
 
-            // Add some basic instructions
-            const instructionsDiv = document.createElement('div');
-            instructionsDiv.innerHTML = `
-                <p style="font-size: 0.9em; color: #666; text-align: center; margin-top: 20px;">
-                    <strong>نحوه استفاده:</strong><br>
-                    ۱. کارت جدید اضافه کنید (انگلیسی یا چینی/مفهومی).<br>
-                    ۲. کارت‌های آماده مرور را در بخش "مرور کارت‌ها" انجام دهید.<br>
-                    ۳. برای هر کارت، ابتدا معنی/مفهوم را حدس بزنید، سپس "نمایش پاسخ" را بزنید.<br>
-                    ۴. بعد از دیدن پاسخ، انتخاب کنید "یادم بود" یا "اشتباه گفتم".<br>
-                    ۵. در حالت انگلیسی، گاهی از شما املا خواسته می‌شود.<br>
-                    ۶. دکمه "خروجی CSV" برای گرفتن نسخه پشتیبان از اطلاعاتتان است.
-                </p>
-            `;
-            container.insertBefore(instructionsDiv, document.getElementById('add-card-section'));
+        const escapeCSV = (text) => {
+            if (typeof text !== 'string') text = String(text ?? '');
+            return `"${text.replace(/"/g, '""')}"`;
         };
 
-    </script>
+        cards.forEach(card => {
+            csvContent += [
+                escapeCSV(card.id),
+                escapeCSV(card.type),
+                escapeCSV(card.box),
+                escapeCSV(card.nextReview ? new Date(card.nextReview).toISOString().split('T')[0] : ''),
+                escapeCSV(card.learnedCount),
+                escapeCSV(card.lastReviewDate ? new Date(card.lastReviewDate).toISOString().split('T')[0] : ''),
+                escapeCSV(card.word || ''),
+                escapeCSV(card.meaning || ''),
+                escapeCSV(card.imageUrl || ''),
+                escapeCSV(card.char || '')
+            ].join(',') + '\n';
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        if (link.download) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'lightner_cards.csv');
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    // Minimal CSV parser supporting quoted fields with embedded commas / escaped quotes ("")
+    function parseCSV(text) {
+        const rows = [];
+        let row = [];
+        let field = '';
+        let inQuotes = false;
+        for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            if (inQuotes) {
+                if (ch === '"') {
+                    if (text[i + 1] === '"') { field += '"'; i++; }
+                    else { inQuotes = false; }
+                } else {
+                    field += ch;
+                }
+            } else {
+                if (ch === '"') inQuotes = true;
+                else if (ch === ',') { row.push(field); field = ''; }
+                else if (ch === '\n' || ch === '\r') {
+                    if (ch === '\r' && text[i + 1] === '\n') i++;
+                    row.push(field); field = '';
+                    if (row.length > 1 || row[0] !== '') rows.push(row);
+                    row = [];
+                } else {
+                    field += ch;
+                }
+            }
+        }
+        if (field !== '' || row.length) { row.push(field); rows.push(row); }
+        return rows;
+    }
+
+    function dateStrToTimestamp(str) {
+        if (!str) return null;
+        const t = new Date(str);
+        if (isNaN(t.getTime())) return null;
+        return t.setHours(0, 0, 0, 0);
+    }
+
+    async function importFromCSV(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const text = await file.text();
+        const rows = parseCSV(text);
+        if (rows.length < 2) {
+            alert('فایل CSV خالی یا نامعتبر است.');
+            event.target.value = '';
+            return;
+        }
+        const header = rows[0].map(h => h.trim());
+        const idx = (name) => header.indexOf(name);
+
+        let imported = 0;
+        for (let r = 1; r < rows.length; r++) {
+            const row = rows[r];
+            if (row.length < 2) continue;
+            const type = (row[idx('type')] || 'english').trim() === 'chinese' ? 'chinese' : 'english';
+            const box = Math.min(5, Math.max(1, parseInt(row[idx('box')], 10) || 1));
+            const nextReview = dateStrToTimestamp(row[idx('nextReview')]) ?? new Date().setHours(0, 0, 0, 0);
+            const learnedCount = parseInt(row[idx('learnedCount')], 10) || 0;
+            const lastReviewDate = dateStrToTimestamp(row[idx('lastReviewDate')]);
+            const word = idx('word') > -1 ? row[idx('word')] : '';
+            const meaning = idx('meaning') > -1 ? row[idx('meaning')] : '';
+            const imageUrl = idx('imageUrl') > -1 && row[idx('imageUrl')] ? row[idx('imageUrl')] : null;
+            const char = idx('char') > -1 ? row[idx('char')] : '';
+
+            if (type === 'english' && !word) continue;
+            if (type === 'chinese' && !char) continue;
+
+            await addCardToDB({
+                type, box, nextReview, learnedCount, lastReviewDate,
+                imageUrl,
+                word: type === 'english' ? word : undefined,
+                char: type === 'chinese' ? char : undefined,
+                meaning
+            });
+            imported++;
+        }
+
+        alert(`${imported} کارت با موفقیت وارد شد.`);
+        event.target.value = '';
+        await renderCardList();
+        await loadReviewQueue();
+    }
+
+    // ============================================================
+    // Stats / dashboard
+    // ============================================================
+    async function renderStats() {
+        const cards = await getAllCards();
+        const today = new Date().setHours(0, 0, 0, 0);
+        const total = cards.length;
+        const boxCounts = [0, 0, 0, 0, 0, 0];
+        let dueToday = 0, reviewedToday = 0;
+
+        cards.forEach(c => {
+            if (c.box >= 1 && c.box <= 5) boxCounts[c.box]++;
+            if (c.nextReview <= today) dueToday++;
+            if (c.lastReviewDate === today) reviewedToday++;
+        });
+
+        const mastered = total ? Math.round((boxCounts[5] / total) * 100) : 0;
+
+        document.getElementById('stat-grid').innerHTML = `
+            <div class="stat-card"><div class="num">${total}</div><div class="label">کل لغات</div></div>
+            <div class="stat-card"><div class="num">${mastered}%</div><div class="label">مسلط‌شده (جعبه ۵)</div></div>
+            <div class="stat-card"><div class="num">${dueToday}</div><div class="label">آماده مرور امروز</div></div>
+            <div class="stat-card"><div class="num">${reviewedToday}</div><div class="label">مرورشده امروز</div></div>
+        `;
+
+        const maxCount = Math.max(1, ...boxCounts.slice(1));
+        const boxVars = { 1: 'var(--box1)', 2: 'var(--box2)', 3: 'var(--box3)', 4: 'var(--box4)', 5: 'var(--box5)' };
+        let drawersHtml = '';
+        for (let b = 1; b <= 5; b++) {
+            const pct = Math.max(8, Math.round((boxCounts[b] / maxCount) * 100));
+            drawersHtml += `
+                <div class="drawer-row">
+                    <div class="drawer-label">جعبه ${b}</div>
+                    <div class="drawer-track">
+                        <div class="drawer-fill" style="width:${pct}%; background:${boxVars[b]};">
+                            <span class="drawer-count">${boxCounts[b]}</span>
+                        </div>
+                    </div>
+                </div>`;
+        }
+        document.getElementById('drawers').innerHTML = drawersHtml;
+    }
+
+    // ============================================================
+    // Tabs
+    // ============================================================
+    function switchTab(name) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById('tab-' + name).classList.remove('hidden');
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+
+        if (name === 'list') renderCardList();
+        if (name === 'stats') renderStats();
+        if (name !== 'add' && editingCard) cancelEdit();
+    }
+
+    // ============================================================
+    // Theme
+    // ============================================================
+    function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        document.getElementById('theme-toggle').textContent = theme === 'dark' ? '☀️' : '🌙';
+    }
+
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', next);
+        applyTheme(next);
+    }
+
+    function initTheme() {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+            applyTheme(saved);
+        } else {
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            applyTheme(prefersDark ? 'dark' : 'light');
+        }
+    }
+
+    // ============================================================
+    // Init
+    // ============================================================
+    window.onload = async () => {
+        initTheme();
+        await loadReviewQueue();
+        updateInputFields();
+    };
+</script>
 </body>
 </html>
