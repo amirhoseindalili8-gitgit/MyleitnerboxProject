@@ -384,6 +384,7 @@
     #bank-panel.hidden, #manual-panel.hidden{ display:none; }
     .bank-status{ font-size:.82em; color:var(--ink-soft); margin:2px 4px 10px; }
     .bank-status code{ background:var(--surface-2); padding:1px 6px; border-radius:4px; }
+    .dup-warning{ font-size:.8em; color:var(--danger); margin-top:6px; font-weight:600; }
 </style>
 </head>
 <body>
@@ -465,7 +466,8 @@
                 <div id="english-fields">
                     <div class="field">
                         <label for="english-word">کلمه انگلیسی</label>
-                        <input type="text" id="english-word" placeholder="مثال: apple">
+                        <input type="text" id="english-word" placeholder="مثال: apple" oninput="checkDuplicateLive('english')">
+                        <div id="english-dup-warning" class="dup-warning hidden"></div>
                     </div>
                     <div class="field">
                         <label for="english-meaning">معنی فارسی</label>
@@ -481,7 +483,8 @@
                 <div id="chinese-fields" class="hidden">
                     <div class="field">
                         <label for="chinese-char">کاراکتر/مفهوم</label>
-                        <input type="text" id="chinese-char" placeholder="مثال: 你好 یا فلسفه">
+                        <input type="text" id="chinese-char" placeholder="مثال: 你好 یا فلسفه" oninput="checkDuplicateLive('chinese')">
+                        <div id="chinese-dup-warning" class="dup-warning hidden"></div>
                     </div>
                     <div class="field">
                         <label for="chinese-meaning">معنی</label>
@@ -797,7 +800,13 @@
         let learnedCount = currentCard.learnedCount || 0;
 
         if (isCorrect) {
-            if (currentCard.box < 5) {
+            if (learnedCount === 0) {
+                // First correct answer since this card entered its current box
+                // (brand new card, or one that was just reset to box 1 after a mistake):
+                // confirm its place in the current box instead of jumping ahead.
+                nextBox = currentCard.box;
+                nextReviewDate = calculateNextReview(nextBox);
+            } else if (currentCard.box < 5) {
                 nextBox = currentCard.box + 1;
                 nextReviewDate = calculateNextReview(nextBox);
             } else {
@@ -888,6 +897,9 @@
         document.getElementById('chinese-image').value = '';
         document.getElementById('chinese-preview').src = '#';
         document.getElementById('chinese-preview').classList.add('hidden');
+
+        document.getElementById('english-dup-warning').classList.add('hidden');
+        document.getElementById('chinese-dup-warning').classList.add('hidden');
     }
 
     function startEditCard(card) {
@@ -923,6 +935,31 @@
         clearAddForm();
     }
 
+    async function findDuplicateCard(type, frontText, excludeId = null) {
+        const cards = await getAllCards();
+        const norm = (frontText || '').trim().toLowerCase();
+        if (!norm) return null;
+        return cards.find(c => c.type === type && c.id !== excludeId &&
+            ((type === 'english' ? c.word : c.char) || '').trim().toLowerCase() === norm) || null;
+    }
+
+    async function checkDuplicateLive(type) {
+        const inputId = type === 'english' ? 'english-word' : 'chinese-char';
+        const warnId = type === 'english' ? 'english-dup-warning' : 'chinese-dup-warning';
+        const value = document.getElementById(inputId).value.trim();
+        const warnEl = document.getElementById(warnId);
+        if (!value) { warnEl.classList.add('hidden'); return; }
+
+        const excludeId = editingCard ? editingCard.id : null;
+        const dup = await findDuplicateCard(type, value, excludeId);
+        if (dup) {
+            warnEl.textContent = `⚠️ این کلمه از قبل در جعبه ${dup.box} در حال یادگیری است`;
+            warnEl.classList.remove('hidden');
+        } else {
+            warnEl.classList.add('hidden');
+        }
+    }
+
     async function saveCard() {
         const cardType = document.getElementById('card-type').value;
         let word = '', meaning = '', char = '', imageUrl = null;
@@ -941,6 +978,14 @@
 
         if ((cardType === 'english' && !word) || (cardType !== 'english' && !char) || !meaning) {
             alert('لطفاً تمام فیلدهای الزامی را پر کنید.');
+            return;
+        }
+
+        const frontText = cardType === 'english' ? word : char;
+        const excludeId = editingCard ? editingCard.id : null;
+        const dup = await findDuplicateCard(cardType, frontText, excludeId);
+        if (dup) {
+            alert(`این کلمه از قبل در جعبه ${dup.box} در حال یادگیری است. برای جلوگیری از تکرار، دوباره اضافه/ذخیره نشد.`);
             return;
         }
 
