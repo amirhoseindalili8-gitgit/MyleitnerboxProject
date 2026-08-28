@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>یادگیرنده لایتنر هوشمند</title>
+<title>Leitner Box Amirhosein</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="icon.png">
@@ -219,6 +219,7 @@
         border-top:1px dashed var(--border);
         width:100%;
         animation:flipIn .25s ease;
+        white-space:pre-line;
     }
     @keyframes flipIn{ from{ opacity:0; transform:translateY(6px) scaleY(.96);} to{opacity:1; transform:translateY(0) scaleY(1);} }
     .card-img{ max-width:100%; max-height:150px; border-radius:var(--radius-s); margin-top:12px; }
@@ -440,6 +441,7 @@
                     <button class="chip" data-level="B2" onclick="setBankLevelFilter('B2')">B2</button>
                     <button class="chip" data-level="C1" onclick="setBankLevelFilter('C1')">C1</button>
                     <button class="chip" data-level="C2" onclick="setBankLevelFilter('C2')">C2</button>
+                    <button class="chip" data-level="CFA1" onclick="setBankLevelFilter('CFA1')">CFA Level I</button>
                 </div>
                 <div id="bank-status" class="bank-status"></div>
                 <div id="bank-results"></div>
@@ -1112,7 +1114,7 @@
         statusEl.textContent = `${filtered.length} کلمه پیدا شد`;
 
         const visible = filtered.slice(0, bankVisibleCount);
-        const levelColors = { A1: 'var(--box5)', A2: 'var(--box4)', B1: 'var(--box3)', B2: 'var(--box2)', C1: 'var(--box1)', C2: 'var(--chinese)' };
+        const levelColors = { A1: 'var(--box5)', A2: 'var(--box4)', B1: 'var(--box3)', B2: 'var(--box2)', C1: 'var(--box1)', C2: 'var(--chinese)', CFA1: 'var(--chinese-soft)' };
 
         resultsEl.innerHTML = visible.map(w => {
             const already = addedWordsSet.has(String(w.w).toLowerCase());
