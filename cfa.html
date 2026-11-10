@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CFA Level I — لایتنر تخصصی</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F4F3; --surface:#FFFFFF; --surface-2:#FAFBFA; --ink:#1E232B; --ink-soft:#5B6472; --ink-faint:#8992A0;
+  --border:#E1E4E2; --accent:#1F4E78; --accent-ink:#FFFFFF; --accent-soft:#E4EDF5; --danger:#C0392B; --danger-soft:#F8E7E5;
+  --ok:#2E7A56; --ok-soft:#E3F1EA;
+  --box1:#D6524A; --box2:#E08A3C; --box3:#D2A93B; --box4:#4E9585; --box5:#2E7A56;
+  --shadow:0 1px 3px rgba(20,25,30,.06), 0 8px 24px rgba(20,25,30,.05);
+  --radius-s:8px; --radius-m:14px; --radius-l:20px;
+}
+[data-theme="dark"]{
+  --paper:#14171C; --surface:#1D2129; --surface-2:#20242C; --ink:#E7E9EC; --ink-soft:#9AA3AD; --ink-faint:#6B7480;
+  --border:#2A2F37; --accent:#7FA6C4; --accent-ink:#12181D; --accent-soft:#232C34; --danger:#E07A6E; --danger-soft:#33201E;
+  --ok:#5FBF8F; --ok-soft:#1D2D25;
+  --box1:#E2665D; --box2:#EDA157; --box3:#E0C761; --box4:#63AC9B; --box5:#3E9468;
+  --shadow:0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{ font-family:'Vazirmatn', system-ui, sans-serif; background:var(--paper); color:var(--ink); margin:0; -webkit-tap-highlight-color:transparent; }
+button,input,select,textarea{ font-family:inherit; font-size:1em; }
+.shell{ max-width:620px; margin:0 auto; min-height:100vh; padding-bottom:calc(78px + env(safe-area-inset-bottom)); }
+.topbar{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:calc(14px + env(safe-area-inset-top)) 18px 8px; }
+.topbar h1{ font-size:1.1em; font-weight:800; margin:0; }
+.topbar small{ display:block; color:var(--ink-faint); font-weight:500; font-size:.72em; margin-top:2px; }
+.top-actions{ display:flex; gap:8px; }
+.icon-btn{ background:var(--surface); border:1px solid var(--border); color:var(--ink); width:40px; height:40px; border-radius:50%; cursor:pointer; box-shadow:var(--shadow); display:flex; align-items:center; justify-content:center; text-decoration:none; padding:0; }
+.content{ padding:0 16px; }
+.panel{ display:none; animation:fade .18s ease; }
+.panel.active{ display:block; }
+@keyframes fade{ from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:none;} }
+.title{ font-size:.95em; font-weight:700; color:var(--ink-soft); margin:10px 4px; }
+.card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow); padding:18px; margin-bottom:14px; }
+
+/* stats */
+.stat-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
+.stat{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:10px 6px; text-align:center; }
+.stat b{ display:block; font-size:1.25em; }
+.stat span{ font-size:.68em; color:var(--ink-soft); }
+
+/* topic grid */
+.topic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.topic{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:12px; cursor:pointer; text-align:right; color:var(--ink); box-shadow:var(--shadow); }
+.topic:active{ transform:scale(.98); }
+.topic .ic{ font-size:1.4em; }
+.topic .fa{ font-weight:700; font-size:.92em; margin-top:4px; }
+.topic .en{ direction:ltr; text-align:right; color:var(--ink-faint); font-size:.72em; }
+.topic .meta{ color:var(--ink-soft); font-size:.74em; margin-top:6px; }
+.bar{ height:5px; background:var(--accent-soft); border-radius:99px; overflow:hidden; margin-top:6px; }
+.bar i{ display:block; height:100%; background:var(--accent); }
+
+/* chips / inputs */
+.chip-row{ display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:8px; }
+.chip{ flex:none; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft); border-radius:99px; padding:6px 12px; font-size:.8em; cursor:pointer; white-space:nowrap; }
+.chip.active{ background:var(--accent); color:var(--accent-ink); border-color:var(--accent); }
+input[type=search], input[type=text], select, textarea{ width:100%; background:var(--surface); color:var(--ink); border:1px solid var(--border); border-radius:var(--radius-m); padding:10px 12px; margin-bottom:8px; }
+textarea{ min-height:120px; direction:ltr; text-align:left; resize:vertical; }
+.row{ display:flex; gap:8px; align-items:center; }
+.row > *{ flex:1; }
+label.chk{ display:flex; align-items:center; gap:6px; font-size:.82em; color:var(--ink-soft); margin:2px 2px 10px; }
+
+/* buttons */
+.btn{ border:0; border-radius:var(--radius-m); padding:11px 16px; cursor:pointer; font-weight:700; background:var(--accent-soft); color:var(--accent); }
+.btn.primary{ background:var(--accent); color:var(--accent-ink); }
+.btn.ok{ background:var(--ok); color:#fff; }
+.btn.bad{ background:var(--danger); color:#fff; }
+.btn:disabled{ opacity:.45; cursor:default; }
+.btn.block{ width:100%; }
+.btn-row{ display:flex; gap:8px; margin-top:10px; }
+.btn-row .btn{ flex:1; }
+
+/* list */
+.item{ display:flex; gap:10px; align-items:center; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-m); padding:10px 12px; margin-bottom:8px; cursor:pointer; }
+.item .main{ flex:1; min-width:0; }
+.item .w{ direction:ltr; text-align:left; font-weight:700; font-size:.95em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.item .fa{ color:var(--ink-soft); font-size:.8em; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.tags{ display:flex; gap:5px; flex-wrap:wrap; margin-top:4px; }
+.tag{ font-size:.66em; background:var(--accent-soft); color:var(--accent); border-radius:99px; padding:2px 8px; }
+.tag.pending{ background:var(--paper); color:var(--ink-faint); border:1px dashed var(--border); }
+.tag.added{ background:var(--ok-soft); color:var(--ok); }
+.empty{ text-align:center; color:var(--ink-faint); padding:28px 10px; font-size:.9em; }
+
+/* flashcard */
+.flash{ text-align:center; }
+.flash .front{ direction:ltr; font-size:1.45em; font-weight:800; line-height:1.5; }
+.flash .state{ color:var(--ink-faint); font-size:.78em; margin-bottom:8px; }
+.flash .back{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border); text-align:right; }
+.back .fa{ font-size:1.15em; font-weight:700; margin-bottom:8px; }
+.en-block{ direction:ltr; text-align:left; font-size:.9em; line-height:1.75; color:var(--ink); margin:6px 0; }
+.en-block.ex{ color:var(--ink-soft); font-style:italic; }
+.lbl{ font-size:.7em; color:var(--ink-faint); font-weight:700; margin-top:8px; }
+.boxes{ display:flex; gap:6px; margin-bottom:12px; }
+.boxes div{ flex:1; text-align:center; border-radius:var(--radius-s); padding:6px 0; color:#fff; font-size:.78em; font-weight:700; }
+.hidden{ display:none !important; }
+
+/* reader */
+.reader-out{ direction:ltr; text-align:left; line-height:2.1; font-size:1.02em; }
+.rd-term{ border-bottom:2px solid var(--accent); background:var(--accent-soft); border-radius:4px; padding:0 2px; cursor:pointer; }
+.rd-w{ cursor:pointer; border-radius:4px; }
+.rd-w:active{ background:var(--accent-soft); }
+
+/* quiz */
+.q-prompt{ direction:ltr; text-align:left; font-size:1.02em; line-height:1.85; margin:6px 0 14px; }
+.q-opt{ display:block; width:100%; direction:ltr; text-align:left; background:var(--surface); border:1.5px solid var(--border); color:var(--ink); border-radius:var(--radius-m); padding:13px 14px; margin-bottom:9px; cursor:pointer; font-weight:600; }
+.q-opt.right{ background:var(--ok-soft); border-color:var(--ok); }
+.q-opt.wrong{ background:var(--danger-soft); border-color:var(--danger); }
+.q-explain{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-m); padding:12px; font-size:.88em; line-height:1.8; margin-bottom:10px; }
+
+/* modal */
+.overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:flex; align-items:flex-end; justify-content:center; z-index:100; opacity:0; pointer-events:none; transition:opacity .18s; }
+.overlay.open{ opacity:1; pointer-events:auto; }
+.sheet{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l) var(--radius-l) 0 0; width:100%; max-width:620px; max-height:82vh; overflow-y:auto; padding:20px 18px calc(24px + env(safe-area-inset-bottom)); transform:translateY(14px); transition:transform .18s; }
+.overlay.open .sheet{ transform:none; }
+@media(min-width:640px){ .overlay{ align-items:center; } .sheet{ border-radius:var(--radius-l); } }
+.sheet-head{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+.sheet-term{ direction:ltr; text-align:left; font-size:1.25em; font-weight:800; line-height:1.5; }
+.x-btn{ background:var(--surface-2); border:1px solid var(--border); color:var(--ink-soft); width:32px; height:32px; border-radius:50%; cursor:pointer; flex:none; }
+
+/* tabbar */
+.tabbar{ position:fixed; bottom:0; inset-inline:0; background:var(--surface); border-top:1px solid var(--border); display:flex; justify-content:center; padding-bottom:env(safe-area-inset-bottom); z-index:50; }
+.tabbar-in{ display:flex; width:100%; max-width:620px; }
+.tab{ flex:1; border:0; background:none; color:var(--ink-faint); padding:9px 0 8px; font-size:.7em; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.tab span{ font-size:1.6em; line-height:1; }
+.tab.active{ color:var(--accent); font-weight:700; }
+.note{ font-size:.78em; color:var(--ink-faint); line-height:1.8; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <h1>CFA Level I <small>لایتنر تخصصی لغات و مفاهیم</small></h1>
+    <div class="top-actions">
+      <a class="icon-btn" href="./index.html" title="اپ لغات انگلیسی/چینی">🔤</a>
+      <button class="icon-btn" id="theme-btn" title="تم">🌓</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- HOME -->
+    <section class="panel active" id="panel-home">
+      <div class="stat-row" id="home-stats"></div>
+      <div class="title">سرفصل‌های CFA</div>
+      <div class="topic-grid" id="topic-grid"></div>
+      <div class="title" style="margin-top:18px;">پشتیبان‌گیری</div>
+      <div class="card">
+        <div class="note" style="margin-bottom:10px;">پیشرفت مرور فقط داخل مرورگر همین دستگاه ذخیره می‌شود. گاهی از آن پشتیبان بگیرید.</div>
+        <div class="btn-row">
+          <button class="btn" id="export-btn">خروجی پشتیبان</button>
+          <button class="btn" id="import-btn">بازیابی پشتیبان</button>
+        </div>
+        <input type="file" id="import-file" accept="application/json" class="hidden">
+      </div>
+    </section>
+
+    <!-- WORDS -->
+    <section class="panel" id="panel-words">
+      <input type="search" id="w-search" placeholder="جستجوی لغت یا ترجمه…">
+      <div class="chip-row" id="w-chips"></div>
+      <div class="chip-row hidden" id="w-mods"></div>
+      <div class="note hidden" id="w-mod-title" style="margin:-2px 4px 8px;direction:ltr;text-align:left;"></div>
+      <label class="chk"><input type="checkbox" id="w-only-done"> فقط لغات تکمیل‌شده (دارای ترجمه و تعریف)</label>
+      <label class="chk"><input type="checkbox" id="w-only-gloss"> فقط اصطلاحات Glossary رسمی ۲۰۲۷</label>
+      <div id="w-list"></div>
+      <button class="btn block hidden" id="w-more">نمایش بیشتر</button>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="panel" id="panel-review">
+      <select id="r-topic"></select>
+      <div class="boxes" id="r-boxes"></div>
+      <div class="card flash" id="r-card"></div>
+      <div class="btn-row" id="r-actions"></div>
+      <div class="btn-row"><button class="btn block" id="r-end">✅ پایان مرور امروز — رفتن به روز بعد</button></div>
+      <div class="note" style="margin-top:10px;">روز مرور فقط با دکمه بالا جلو می‌رود، نه با تاریخ تقویم.</div>
+    </section>
+
+    <!-- READER -->
+    <section class="panel" id="panel-reader">
+      <div class="title">متن‌خوان</div>
+      <textarea id="rd-input" placeholder="یک متن یا تعریف انگلیسی را اینجا پیست کنید…"></textarea>
+      <div class="btn-row" style="margin-top:0;margin-bottom:12px;">
+        <button class="btn primary" id="rd-go">نمایش با دیکشنری</button>
+        <button class="btn" id="rd-clear">پاک‌کردن</button>
+      </div>
+      <div class="card hidden" id="rd-card">
+        <div class="note" style="margin-bottom:8px;">اصطلاحات CFA با خط‌زیر مشخص شده‌اند. روی هر کلمه بزنید تا معنی بیاید.</div>
+        <div class="reader-out" id="rd-out"></div>
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="panel" id="panel-quiz">
+      <div id="q-setup">
+        <div class="title">آزمون</div>
+        <div class="card">
+          <div class="lbl" style="margin-top:0">نوع آزمون</div>
+          <select id="q-mode">
+            <option value="know">نالج‌چک (دو گزینه‌ای، از لغات تکمیل‌شده)</option>
+            <option value="bank">تمرین سوال (از بانک سوال شخصی)</option>
+          </select>
+          <div class="lbl">سرفصل</div>
+          <select id="q-topic"></select>
+          <div class="lbl">تعداد سوال</div>
+          <select id="q-count"><option>5</option><option selected>10</option><option>20</option></select>
+          <button class="btn primary block" id="q-start" style="margin-top:8px;">شروع آزمون</button>
+          <div class="note" id="q-note" style="margin-top:10px;"></div>
+        </div>
+      </div>
+      <div id="q-run" class="hidden"></div>
+    </section>
+  </div>
+</div>
+
+<nav class="tabbar"><div class="tabbar-in">
+  <button class="tab active" data-tab="home"><span>🏠</span>خانه</button>
+  <button class="tab" data-tab="words"><span>📚</span>لغات</button>
+  <button class="tab" data-tab="review"><span>🗂️</span>مرور</button>
+  <button class="tab" data-tab="reader"><span>🔎</span>متن‌خوان</button>
+  <button class="tab" data-tab="quiz"><span>📝</span>آزمون</button>
+</div></nav>
+
+<div class="overlay" id="overlay"><div class="sheet">
+  <div class="sheet-head"><div class="sheet-term" id="m-term"></div><button class="x-btn" id="m-close" aria-label="بستن">✕</button></div>
+  <div class="tags" id="m-tags"></div>
+  <div id="m-body" style="margin-top:12px;"></div>
+  <div class="btn-row"><button class="btn primary" id="m-add">افزودن به مرور</button></div>
+</div></div>
+
+<script>
+/* ================================================================
+   Data / constants
+================================================================ */
+const TOPICS = [
+  { id:'Ethical and Professional Standards', fa:'اخلاق و استانداردهای حرفه‌ای', ic:'⚖️', sh:'Ethics' },
+  { id:'Quantitative Methods',               fa:'روش‌های کمی',               ic:'📐', sh:'Quant' },
+  { id:'Economics',                          fa:'اقتصاد',                    ic:'🌐', sh:'Econ' },
+  { id:'Financial Statement Analysis',       fa:'تحلیل صورت‌های مالی',        ic:'🧾', sh:'FSA' },
+  { id:'Corporate Issuers',                  fa:'ناشران شرکتی',               ic:'🏢', sh:'Corp' },
+  { id:'Equity Investments',                 fa:'سرمایه‌گذاری در سهام',       ic:'📈', sh:'Equity' },
+  { id:'Fixed Income',                       fa:'درآمد ثابت',                ic:'🏦', sh:'FI' },
+  { id:'Derivatives',                        fa:'مشتقات',                    ic:'🔀', sh:'Deriv' },
+  { id:'Alternative Investments',            fa:'سرمایه‌گذاری‌های جایگزین',   ic:'🏗️', sh:'Alt' },
+  { id:'Portfolio Management',               fa:'مدیریت پرتفوی',              ic:'🧺', sh:'PM' },
+];
+const GENERAL = 'General';
+const BOX_INTERVALS = [0, 1, 2, 4, 8, 15];
+const BOX_COLORS = ['', 'var(--box1)', 'var(--box2)', 'var(--box3)', 'var(--box4)', 'var(--box5)'];
+const PAGE = 40;
+
+let bank = [];                 // CFA terms
+let bankByKey = new Map();
+let MODS = {};                 // { topic: { moduleNumber: title } } from cfa_modules.json (2027 Learning Modules)
+let generalMap = new Map();    // optional: general English words from ./wordbank.json
+let cards = [];
+let session = parseInt(localStorage.getItem('cfaSession'), 10) || 0;
+let addedKeys = new Set();
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => new Intl.NumberFormat('fa-IR').format(n);
+const topicFa = id => (TOPICS.find(t => t.id === id) || { fa: id === GENERAL ? 'عمومی' : id }).fa;
+const keyOf = (kind, w) => (kind === 'general' ? 'g:' : 'c:') + String(w).toLowerCase().trim();
+const isDone = e => !!(e && e.fa && e.d);
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+/* ================================================================
+   IndexedDB
+================================================================ */
+let db;
+function openDB() {
+  return new Promise((res, rej) => {
+    if (db) return res(db);
+    const r = indexedDB.open('cfa_leitner_db', 1);
+    r.onupgradeneeded = e => {
+      const s = e.target.result.createObjectStore('cards', { keyPath: 'id', autoIncrement: true });
+      s.createIndex('key', 'key', { unique: true });
+    };
+    r.onsuccess = e => { db = e.target.result; res(db); };
+    r.onerror = () => rej(r.error);
+  });
+}
+const tx = (mode) => db.transaction(['cards'], mode).objectStore('cards');
+const idbReq = r => new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); });
+async function loadCards() { await openDB(); cards = await idbReq(tx('readonly').getAll()); addedKeys = new Set(cards.map(c => c.key)); }
+async function putCard(c) { await openDB(); return idbReq(tx('readwrite').put(c)); }
+
+/* ================================================================
+   Bank loading + lookup index
+================================================================ */
+async function loadBank() {
+  try {
+    const r = await fetch('./cfa_wordbank.json', { cache: 'no-store' });
+    if (!r.ok) throw new Error('not found');
+    bank = await r.json();
+  } catch (e) { console.warn('cfa_wordbank.json not loaded', e); bank = []; }
+  try { const r = await fetch('./cfa_modules.json', { cache: 'no-store' }); if (r.ok) MODS = await r.json(); } catch (e) { MODS = {}; }
+  bankByKey = new Map(bank.map(e => [keyOf('cfa', e.w), e]));
+  try {
+    const r = await fetch('./wordbank.json', { cache: 'no-store' });
+    if (r.ok) (await r.json()).forEach(e => { if (e.l !== 'CFA1' && e.m && e.w) generalMap.set(String(e.w).toLowerCase(), e); });
+  } catch (e) { /* optional */ }
+  buildPhraseIndex();
+}
+
+const normPhrase = s => String(s).toLowerCase().replace(/[’']s\b/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+let phraseIdx = new Map(), maxPhrase = 1;
+function buildPhraseIndex() {
+  phraseIdx = new Map(); maxPhrase = 1;
+  const put = (k, e) => { if (k && !phraseIdx.has(k)) { phraseIdx.set(k, e); maxPhrase = Math.max(maxPhrase, k.split(' ').length); } };
+  bank.forEach(e => {
+    const base = e.w.replace(/\s*\([^)]*\)/g, '').trim();
+    put(normPhrase(base), e);
+    const m = e.w.match(/\(([A-Za-z]{2,8})s?\)/);
+    if (m) put(m[1].toLowerCase(), e);
+  });
+}
+function lookupPhrase(k) {
+  if (phraseIdx.has(k)) return phraseIdx.get(k);
+  const cands = [];
+  if (k.endsWith('ies')) cands.push(k.slice(0, -3) + 'y');
+  if (k.endsWith('es')) cands.push(k.slice(0, -2));
+  if (k.endsWith('s')) cands.push(k.slice(0, -1));
+  for (const c of cands) if (phraseIdx.has(c)) return phraseIdx.get(c);
+  return null;
+}
+function lookupGeneral(w) {
+  w = w.toLowerCase().replace(/[’']s$/, '');
+  if (generalMap.has(w)) return generalMap.get(w);
+  const c = [];
+  if (w.endsWith('ies')) c.push(w.slice(0, -3) + 'y');
+  if (w.endsWith('es')) c.push(w.slice(0, -2));
+  if (w.endsWith('s')) c.push(w.slice(0, -1));
+  if (w.endsWith('ed')) c.push(w.slice(0, -2), w.slice(0, -1));
+  if (w.endsWith('ing')) c.push(w.slice(0, -3), w.slice(0, -3) + 'e');
+  for (const x of c) if (generalMap.has(x)) return generalMap.get(x);
+  return null;
+}
+
+/* ================================================================
+   Leitner engine (session based — no calendar dependence)
+================================================================ */
+function persistSession() { localStorage.setItem('cfaSession', String(session)); }
+function isDue(c) { return c.introduced === false ? false : (c.box === 1 || (c.dueSession ?? 0) <= session); }
+function buildQueue(list) {
+  const upper = list.filter(c => c.box >= 2 && (c.dueSession ?? 0) <= session)
+                    .sort((a, b) => b.box - a.box || (a.dueSession ?? 0) - (b.dueSession ?? 0));
+  const box1Old = list.filter(c => c.box === 1 && c.introduced !== false);
+  const box1New = list.filter(c => c.box === 1 && c.introduced === false);
+  return [...upper, ...box1Old, ...box1New];
+}
+function content(c) {                       // prefer live bank data; fall back to snapshot
+  const live = c.kind === 'cfa' ? bankByKey.get(c.key) : null;
+  return (live && isDone(live)) ? live : c;
+}
+async function addEntryAsCard(entry, kind) {
+  const key = keyOf(kind, entry.w);
+  if (addedKeys.has(key)) return false;
+  const card = {
+    key, kind, w: entry.w, topic: kind === 'cfa' ? entry.t : GENERAL,
+    fa: entry.fa || entry.m || '', d: entry.d || '', x: entry.x || '',
+    box: 1, introduced: false, dueSession: session, learnedCount: 0, lastReviewDate: null,
+  };
+  card.id = await putCard(card);
+  cards.push(card); addedKeys.add(key);
+  return true;
+}
+
+/* ================================================================
+   Tabs / theme
+================================================================ */
+function setTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + name));
+  if (name === 'home') renderHome();
+  if (name === 'words') renderWords(true);
+  if (name === 'review') renderReview();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => setTab(t.dataset.tab)));
+function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); localStorage.setItem('cfaTheme', t); }
+$('theme-btn').onclick = () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+
+/* ================================================================
+   Home
+================================================================ */
+function renderHome() {
+  const done = bank.filter(isDone).length;
+  const due = cards.filter(isDue).length;
+  $('home-stats').innerHTML = [
+    [bank.length, 'کل لغات'], [done, 'تکمیل‌شده'], [cards.length, 'در مرور'], [due, 'سررسید'],
+  ].map(([n, l]) => `<div class="stat"><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
+
+  $('topic-grid').innerHTML = TOPICS.map(t => {
+    const all = bank.filter(e => e.t === t.id), dn = all.filter(isDone).length;
+    const inRev = cards.filter(c => c.topic === t.id).length;
+    const pct = all.length ? Math.round(dn / all.length * 100) : 0;
+    return `<button class="topic" data-topic="${esc(t.id)}">
+      <div class="ic">${t.ic}</div><div class="fa">${t.fa}</div><div class="en">${t.id}</div>
+      <div class="meta">${fmt(all.length)} لغت · ${fmt(dn)} تکمیل · ${fmt(inRev)} در مرور</div>
+      <div class="bar"><i style="width:${pct}%"></i></div></button>`;
+  }).join('');
+}
+$('topic-grid').addEventListener('click', e => {
+  const b = e.target.closest('.topic'); if (!b) return;
+  wTopic = b.dataset.topic; wModule = 'all'; setTab('words');
+});
+
+/* ================================================================
+   Words list
+================================================================ */
+let wTopic = 'all', wModule = 'all', wShown = PAGE;
+function buildChips() {
+  const chips = [['all', 'همه'], ...TOPICS.map(t => [t.id, t.sh])];
+  $('w-chips').innerHTML = chips.map(([id, l]) => `<button class="chip ${id === wTopic ? 'active' : ''}" data-id="${esc(id)}">${esc(l)}</button>`).join('');
+  const mods = wTopic !== 'all' ? Object.keys(MODS[wTopic] || {}).map(Number).sort((a, b) => a - b) : [];
+  $('w-mods').classList.toggle('hidden', !mods.length);
+  $('w-mods').innerHTML = mods.length ? [['all', 'همه ماژول‌ها'], ...mods.map(n => [String(n), 'M' + n])]
+    .map(([id, l]) => `<button class="chip ${id === String(wModule) ? 'active' : ''}" data-id="${id}">${l}</button>`).join('') : '';
+  const mt = (wTopic !== 'all' && wModule !== 'all') ? (MODS[wTopic] || {})[wModule] : '';
+  $('w-mod-title').classList.toggle('hidden', !mt); $('w-mod-title').textContent = mt ? `Module ${wModule}: ${mt}` : '';
+}
+$('w-chips').addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; wTopic = c.dataset.id; wModule = 'all'; renderWords(true); });
+$('w-mods').addEventListener('click', e => { const c = e.target.closest('.chip'); if (!c) return; wModule = c.dataset.id; renderWords(true); });
+$('w-only-gloss').addEventListener('change', () => renderWords(true));
+$('w-search').addEventListener('input', () => renderWords(true));
+$('w-only-done').addEventListener('change', () => renderWords(true));
+$('w-more').addEventListener('click', () => { wShown += PAGE; renderWords(false); });
+
+function renderWords(reset) {
+  if (reset) wShown = PAGE;
+  buildChips();
+  const q = $('w-search').value.trim().toLowerCase(), onlyDone = $('w-only-done').checked, onlyGloss = $('w-only-gloss').checked;
+  const list = bank.map((e, i) => [e, i]).filter(([e]) => {
+    if (wTopic !== 'all' && e.t !== wTopic) return false;
+    if (wModule !== 'all' && wTopic !== 'all' && String(e.r) !== String(wModule)) return false;
+    if (onlyDone && !isDone(e)) return false;
+    if (onlyGloss && !e.g) return false;
+    if (q && !(e.w.toLowerCase().includes(q) || (e.fa || '').includes(q))) return false;
+    return true;
+  });
+  const vis = list.slice(0, wShown);
+  $('w-list').innerHTML = vis.length ? vis.map(([e, i]) => {
+    const added = addedKeys.has(keyOf('cfa', e.w));
+    return `<div class="item" data-i="${i}"><div class="main">
+      <div class="w">${esc(e.w)}</div>
+      <div class="fa">${isDone(e) ? esc(e.fa) : '— هنوز تکمیل نشده'}</div>
+      <div class="tags"><span class="tag">${esc(TOPICS.find(t => t.id === e.t)?.sh || '')}</span>
+      ${e.r ? `<span class="tag">M${e.r}</span>` : ''}${e.g ? '<span class="tag">Glossary ۲۰۲۷</span>' : ''}${e.o ? '<span class="tag pending">در متن ۲۰۲۷ نبود</span>' : ''}
+      ${isDone(e) ? '' : '<span class="tag pending">در انتظار</span>'}${added ? '<span class="tag added">در مرور</span>' : ''}</div>
+    </div></div>`;
+  }).join('') : '<div class="empty">لغتی پیدا نشد.</div>';
+  $('w-more').classList.toggle('hidden', list.length <= wShown);
+}
+$('w-list').addEventListener('click', e => {
+  const it = e.target.closest('.item'); if (!it) return;
+  openEntry(bank[+it.dataset.i], 'cfa');
+});
+
+/* ================================================================
+   Modal (shared by words list, review list, reader)
+================================================================ */
+let modalEntry = null, modalKind = null;
+function openEntry(entry, kind, notFoundWord) {
+  modalEntry = entry; modalKind = kind;
+  $('m-add').classList.remove('hidden');
+  if (!entry) {
+    $('m-term').textContent = notFoundWord || '';
+    $('m-tags').innerHTML = '';
+    $('m-body').innerHTML = '<div class="note">این کلمه در بانک لغات پیدا نشد.</div>';
+    $('m-add').classList.add('hidden');
+  } else {
+    $('m-term').textContent = entry.w;
+    const tags = [];
+    if (kind === 'cfa') { tags.push(`<span class="tag">${esc(topicFa(entry.t))}</span>`); if (entry.r) tags.push(`<span class="tag">Module ${entry.r}${(MODS[entry.t] || {})[entry.r] ? ': ' + esc((MODS[entry.t] || {})[entry.r]) : ''}</span>`);
+      if (entry.g) tags.push('<span class="tag">Glossary ۲۰۲۷</span>'); if (entry.o) tags.push('<span class="tag pending">در متن ۲۰۲۷ پیدا نشد</span>'); }
+    else tags.push(`<span class="tag">${esc(entry.l || 'عمومی')}</span>`);
+    $('m-tags').innerHTML = tags.join('');
+    if (kind === 'cfa') {
+      $('m-body').innerHTML = isDone(entry)
+        ? `<div class="back"><div class="fa">${esc(entry.fa)}</div>
+           <div class="lbl">تعریف</div><div class="en-block">${esc(entry.d)}</div>
+           ${entry.x ? `<div class="lbl">مثال</div><div class="en-block ex">${esc(entry.x)}</div>` : ''}</div>`
+        : '<div class="note">ترجمه و تعریف این اصطلاح هنوز تکمیل نشده است.</div>';
+    } else {
+      $('m-body').innerHTML = `<div class="back"><div class="fa">${esc(entry.m)}</div></div>`;
+    }
+    const ok = kind === 'cfa' ? isDone(entry) : !!entry.m;
+    const added = addedKeys.has(keyOf(kind, entry.w));
+    $('m-add').disabled = added || !ok;
+    $('m-add').textContent = added ? '✅ در مرور هست' : (ok ? 'افزودن به مرور' : 'هنوز تکمیل نشده');
+  }
+  $('overlay').classList.add('open');
+}
+function closeModal() { $('overlay').classList.remove('open'); }
+$('m-close').onclick = closeModal;
+$('overlay').addEventListener('click', e => { if (e.target === $('overlay')) closeModal(); });
+$('m-add').onclick = async () => {
+  if (!modalEntry) return;
+  await addEntryAsCard(modalEntry, modalKind);
+  $('m-add').disabled = true; $('m-add').textContent = '✅ در مرور هست';
+  renderWords(false); renderHome();
+};
+
+/* ================================================================
+   Review
+================================================================ */
+let queue = [], qi = 0, shown = false, rTopic = 'all';
+function buildReviewTopicSelect() {
+  $('r-topic').innerHTML = `<option value="all">همه سرفصل‌ها</option>` +
+    TOPICS.map(t => `<option value="${esc(t.id)}">${t.fa}</option>`).join('') + `<option value="${GENERAL}">لغات عمومی</option>`;
+  $('r-topic').value = rTopic;
+}
+$('r-topic').addEventListener('change', () => { rTopic = $('r-topic').value; renderReview(); });
+
+function renderReview() {
+  buildReviewTopicSelect();
+  const list = cards.filter(c => rTopic === 'all' || c.topic === rTopic);
+  queue = buildQueue(list); qi = 0; shown = false;
+  const counts = [0, 0, 0, 0, 0, 0]; list.forEach(c => counts[c.box]++);
+  $('r-boxes').innerHTML = [1, 2, 3, 4, 5].map(b => `<div style="background:${BOX_COLORS[b]}">جعبه ${b}<br>${fmt(counts[b])}</div>`).join('');
+  showCard();
+}
+function speak(t) {
+  if (!('speechSynthesis' in window)) return;
+  const u = new SpeechSynthesisUtterance(t); u.lang = 'en-US'; speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function showCard() {
+  const el = $('r-card'), act = $('r-actions'); act.innerHTML = '';
+  if (qi >= queue.length) {
+    el.innerHTML = `<div class="empty">${cards.length ? '🎉 مرور این صف تمام شد.' : 'هنوز لغتی به مرور اضافه نشده. از تب «لغات» اضافه کنید.'}</div>`;
+    return;
+  }
+  const c = queue[qi], v = content(c);
+  const state = c.introduced === false ? 'معرفی لغت جدید' : `جعبه ${c.box}`;
+  el.innerHTML = `<div class="state">${state} · ${fmt(qi + 1)} از ${fmt(queue.length)} · ${esc(topicFa(c.topic))}</div>
+    <div class="front">${esc(c.w)} <button class="icon-btn" id="r-speak" style="display:inline-flex;width:32px;height:32px;" aria-label="تلفظ">🔊</button></div>
+    <div class="back hidden" id="r-back"><div class="fa">${esc(v.fa)}</div>
+      ${v.d ? `<div class="lbl">تعریف</div><div class="en-block">${esc(v.d)}</div>` : ''}
+      ${v.x ? `<div class="lbl">مثال</div><div class="en-block ex">${esc(v.x)}</div>` : ''}</div>`;
+  $('r-speak').onclick = () => speak(c.w);
+  act.innerHTML = `<button class="btn primary" id="r-show">نمایش پاسخ</button>`;
+  $('r-show').onclick = () => {
+    $('r-back').classList.remove('hidden');
+    act.innerHTML = c.introduced === false
+      ? `<button class="btn primary" id="r-ack">متوجه شدم، بعدی</button>`
+      : `<button class="btn bad" id="r-no">اشتباه گفتم</button><button class="btn ok" id="r-yes">یادم بود</button>`;
+    if ($('r-ack')) $('r-ack').onclick = () => answer(true);
+    if ($('r-yes')) $('r-yes').onclick = () => answer(true);
+    if ($('r-no')) $('r-no').onclick = () => answer(false);
+  };
+}
+async function answer(ok) {
+  const c = queue[qi];
+  if (c.introduced === false) { c.introduced = true; }
+  else if (ok) {
+    c.box = Math.min(5, c.box + 1);
+    c.dueSession = session + BOX_INTERVALS[c.box];
+    c.learnedCount = (c.learnedCount || 0) + 1;
+  } else { c.box = 1; c.dueSession = session; c.learnedCount = 0; }
+  c.lastReviewDate = Date.now();
+  await putCard(c);
+  qi++; showCard();
+  const counts = [0, 0, 0, 0, 0, 0]; cards.filter(x => rTopic === 'all' || x.topic === rTopic).forEach(x => counts[x.box]++);
+  $('r-boxes').innerHTML = [1, 2, 3, 4, 5].map(b => `<div style="background:${BOX_COLORS[b]}">جعبه ${b}<br>${fmt(counts[b])}</div>`).join('');
+}
+$('r-end').onclick = () => {
+  if (confirm('مرور امروز (همه سرفصل‌ها) تمام شده؟ با تأیید، یک روز مرور جلو می‌رود.')) { session++; persistSession(); renderReview(); renderHome(); }
+};
+
+/* ================================================================
+   Reader (tap-to-lookup)
+================================================================ */
+function renderReader(text) {
+  const re = /[A-Za-z][A-Za-z’'\-]*|\d+(?:[.,]\d+)*%?|[^A-Za-z\d]+/g;
+  const toks = text.match(re) || [];
+  const isWord = t => /^[A-Za-z]/.test(t);
+  const widx = []; toks.forEach((t, i) => { if (isWord(t)) widx.push(i); });
+  const glue = s => /^[\s\-–]+$/.test(s) && !/\n/.test(s);
+  let html = '', i = 0;
+  while (i < toks.length) {
+    const t = toks[i];
+    if (!isWord(t)) { html += esc(t).replace(/\n/g, '<br>'); i++; continue; }
+    let hit = null, endTok = i;
+    for (let L = maxPhrase; L >= 1 && !hit; L--) {
+      let parts = [t], j = i, ok = true;
+      for (let n = 1; n < L; n++) {
+        const sep = toks[j + 1], nxt = toks[j + 2];
+        if (sep === undefined || nxt === undefined || !glue(sep) || !isWord(nxt)) { ok = false; break; }
+        parts.push(nxt); j += 2;
+      }
+      if (!ok) continue;
+      const e = lookupPhrase(normPhrase(parts.join(' ')));
+      if (e) { hit = e; endTok = j; }
+    }
+    if (hit) {
+      html += `<span class="rd-term" data-i="${bank.indexOf(hit)}">${esc(toks.slice(i, endTok + 1).join(''))}</span>`;
+      i = endTok + 1;
+    } else {
+      html += `<span class="rd-w" data-w="${esc(t)}">${esc(t)}</span>`; i++;
+    }
+  }
+  $('rd-out').innerHTML = html; $('rd-card').classList.remove('hidden');
+}
+$('rd-go').onclick = () => { const t = $('rd-input').value; if (t.trim()) renderReader(t); };
+$('rd-clear').onclick = () => { $('rd-input').value = ''; $('rd-out').innerHTML = ''; $('rd-card').classList.add('hidden'); };
+$('rd-out').addEventListener('click', e => {
+  const term = e.target.closest('.rd-term');
+  if (term) return openEntry(bank[+term.dataset.i], 'cfa');
+  const w = e.target.closest('.rd-w');
+  if (w) {
+    const g = lookupGeneral(w.dataset.w);
+    if (g) openEntry(g, 'general'); else openEntry(null, null, w.dataset.w);
+  }
+});
+
+/* ================================================================
+   Quiz
+================================================================ */
+function buildQuizTopics() {
+  $('q-topic').innerHTML = `<option value="all">همه سرفصل‌ها</option>` + TOPICS.map(t => `<option value="${esc(t.id)}">${t.fa}</option>`).join('');
+}
+function updateQuizNote() {
+  const mode = $('q-mode').value, tp = $('q-topic').value;
+  if (mode === 'know') {
+    const n = bank.filter(e => isDone(e) && (tp === 'all' || e.t === tp)).length;
+    $('q-note').textContent = n >= 2 ? `${fmt(n)} لغت تکمیل‌شده برای نالج‌چک در دسترس است.` : 'برای نالج‌چک حداقل ۲ لغت تکمیل‌شده در این سرفصل لازم است.';
+  } else {
+    $('q-note').textContent = 'سوال‌ها از فایل cfa_questions.json خوانده می‌شود (شامل ۱۰۰ سوال تمرینی اصیل؛ می‌توانید سوال‌های خودتان را هم به آن اضافه کنید).';
+  }
+}
+$('q-mode').addEventListener('change', updateQuizNote);
+$('q-topic').addEventListener('change', updateQuizNote);
+
+const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function maskTerm(text, entry) {
+  let out = text;
+  const base = entry.w.replace(/\s*\([^)]*\)/g, '').trim();
+  const acr = (entry.w.match(/\(([A-Za-z]{2,8})s?\)/) || [])[1];
+  [base, acr].filter(Boolean).forEach(s => { out = out.replace(new RegExp('\\b' + reEsc(s) + '(?:s|es)?\\b', 'gi'), '_____'); });
+  return out;
+}
+function makeKnowQuestions(topic, n) {
+  const pool = bank.filter(e => isDone(e) && (topic === 'all' || e.t === topic));
+  if (pool.length < 2) return [];
+  return shuffle(pool).slice(0, n).map(e => {
+    const others = pool.filter(p => p !== e);
+    const sameTopic = others.filter(p => p.t === e.t);
+    const wrong = shuffle(sameTopic.length ? sameTopic : others)[0];
+    const maskedEx = e.x ? maskTerm(e.x, e) : '';
+    const useCloze = maskedEx && maskedEx !== e.x && Math.random() < 0.5;
+    const opts = shuffle([e, wrong]);
+    return {
+      label: useCloze ? 'کدام اصطلاح جای خالی را کامل می‌کند؟' : 'این تعریف مربوط به کدام اصطلاح است؟',
+      prompt: useCloze ? maskedEx : maskTerm(e.d, e),
+      options: opts.map(o => o.w), correct: opts.indexOf(e),
+      explain: `<b dir="ltr">${esc(e.w)}</b> — ${esc(e.fa)}<div class="en-block">${esc(e.d)}</div>`,
+      entry: e,
+    };
+  });
+}
+async function makeBankQuestions(topic, n) {
+  let all = [];
+  try { const r = await fetch('./cfa_questions.json', { cache: 'no-store' }); if (r.ok) all = await r.json(); } catch (e) {}
+  all = all.filter(q => q && Array.isArray(q.options) && q.options.length >= 2 && Number.isInteger(q.answer) && (topic === 'all' || q.topic === topic));
+  return shuffle(all).slice(0, n).map(q => ({
+    label: q.topic ? topicFa(q.topic) : 'سوال', prompt: q.q, options: q.options, correct: q.answer,
+    explain: esc(q.explanation || '') + (q.source ? `<div class="note">منبع: ${esc(q.source)}</div>` : ''),
+  }));
+}
+
+let Q = { list: [], i: 0, score: 0, wrong: [] };
+$('q-start').onclick = async () => {
+  const mode = $('q-mode').value, topic = $('q-topic').value, n = +$('q-count').value;
+  const list = mode === 'know' ? makeKnowQuestions(topic, n) : await makeBankQuestions(topic, n);
+  if (!list.length) { $('q-note').textContent = mode === 'know' ? 'لغت تکمیل‌شده کافی برای این سرفصل وجود ندارد.' : 'سوالی برای این سرفصل در cfa_questions.json پیدا نشد.'; return; }
+  Q = { list, i: 0, score: 0, wrong: [] };
+  $('q-setup').classList.add('hidden'); $('q-run').classList.remove('hidden'); showQ();
+};
+function showQ() {
+  const q = Q.list[Q.i];
+  $('q-run').innerHTML = `<div class="title">سوال ${fmt(Q.i + 1)} از ${fmt(Q.list.length)} · امتیاز ${fmt(Q.score)}</div>
+    <div class="card"><div class="lbl" style="margin-top:0">${esc(q.label)}</div>
+    <div class="q-prompt">${esc(q.prompt)}</div>
+    ${q.options.map((o, i) => `<button class="q-opt" data-i="${i}">${esc(o)}</button>`).join('')}
+    <div id="q-fb"></div></div>`;
+  $('q-run').querySelectorAll('.q-opt').forEach(b => b.onclick = () => pick(+b.dataset.i));
+}
+function pick(i) {
+  const q = Q.list[Q.i], ok = i === q.correct;
+  $('q-run').querySelectorAll('.q-opt').forEach((b, k) => { b.disabled = true; if (k === q.correct) b.classList.add('right'); else if (k === i) b.classList.add('wrong'); });
+  if (ok) Q.score++; else if (q.entry) Q.wrong.push(q.entry);
+  const last = Q.i === Q.list.length - 1;
+  $('q-fb').innerHTML = `<div class="q-explain" dir="auto">${ok ? '✅ درست' : '❌ نادرست'}<br>${q.explain}</div>
+    <button class="btn primary block" id="q-next">${last ? 'نمایش نتیجه' : 'سوال بعدی'}</button>`;
+  $('q-next').onclick = () => { Q.i++; last ? showResult() : showQ(); };
+}
+function showResult() {
+  const uniq = [...new Map(Q.wrong.map(e => [e.w, e])).values()].filter(e => !addedKeys.has(keyOf('cfa', e.w)));
+  $('q-run').innerHTML = `<div class="card" style="text-align:center">
+    <div style="font-size:2em;font-weight:800">${fmt(Q.score)} / ${fmt(Q.list.length)}</div>
+    <div class="note">نتیجه آزمون</div>
+    ${uniq.length ? `<button class="btn block" id="q-addwrong" style="margin-top:12px;">افزودن ${fmt(uniq.length)} لغت اشتباه به مرور</button>` : ''}
+    <button class="btn primary block" id="q-again" style="margin-top:10px;">آزمون جدید</button></div>`;
+  if ($('q-addwrong')) $('q-addwrong').onclick = async () => {
+    for (const e of uniq) await addEntryAsCard(e, 'cfa');
+    $('q-addwrong').disabled = true; $('q-addwrong').textContent = '✅ اضافه شد'; renderHome();
+  };
+  $('q-again').onclick = () => { $('q-run').classList.add('hidden'); $('q-setup').classList.remove('hidden'); updateQuizNote(); };
+}
+
+/* ================================================================
+   Backup
+================================================================ */
+$('export-btn').onclick = () => {
+  const blob = new Blob([JSON.stringify({ app: 'cfa-leitner', version: 1, session, cards }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'cfa_leitner_backup.json'; a.click(); URL.revokeObjectURL(a.href);
+};
+$('import-btn').onclick = () => $('import-file').click();
+$('import-file').addEventListener('change', async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    if (data.app !== 'cfa-leitner' || !Array.isArray(data.cards)) throw new Error('bad file');
+    let added = 0;
+    for (const c of data.cards) { if (c.key && !addedKeys.has(c.key)) { const { id, ...rest } = c; rest.id = await putCard(rest); cards.push(rest); addedKeys.add(rest.key); added++; } }
+    if ((data.session || 0) > session) { session = data.session; persistSession(); }
+    alert(`${added} کارت بازیابی شد.`); renderHome();
+  } catch (err) { alert('فایل پشتیبان معتبر نیست.'); }
+  e.target.value = '';
+});
+
+/* ================================================================
+   Init
+================================================================ */
+window.addEventListener('load', async () => {
+  const saved = localStorage.getItem('cfaTheme');
+  applyTheme(saved || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  await loadCards(); await loadBank();
+  buildQuizTopics(); updateQuizNote(); renderHome();
+});
+</script>
+</body>
+</html>

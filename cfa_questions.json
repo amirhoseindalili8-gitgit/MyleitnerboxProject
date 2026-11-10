@@ -1,0 +1,1202 @@
+[
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "An analyst learns from a friend at a listed company that a merger will be announced tomorrow. The information is material and not public. Under the CFA Standards, the analyst should:",
+  "options": [
+   "refrain from trading on the information and from recommending trades based on it",
+   "recommend the stock to clients but avoid buying it herself",
+   "buy shares only in her personal account, since no client is involved"
+  ],
+  "answer": 0,
+  "explanation": "Standard II(A) prohibits acting, or causing others to act, on material nonpublic information. Trading personally or recommending trades to clients are both violations.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "A portfolio manager buys shares for his own account before placing a large client order in the same stock. Which standard is MOST directly violated?",
+  "options": [
+   "Suitability",
+   "Priority of Transactions",
+   "Record Retention"
+  ],
+  "answer": 1,
+  "explanation": "Standard VI(B) requires client transactions to take precedence over employer and personal transactions. This also amounts to front-running.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "A manager uses client brokerage commissions to pay for her firm's office rent. This is:",
+  "options": [
+   "acceptable because rent is a cost of serving clients",
+   "acceptable if the arrangement is disclosed to the manager's employer",
+   "a violation, because client brokerage must be used for the benefit of clients"
+  ],
+  "answer": 2,
+  "explanation": "Client brokerage is the client's property (Standard III(A)). Soft dollars may pay only for research and services that benefit clients, not the manager's overhead.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "An analyst copies the key findings of a third-party research report into his own report without attribution. The analyst has MOST likely violated the standard on:",
+  "options": [
+   "Fair Dealing, because clients received the report at different times",
+   "Misrepresentation, because he presented another's work as his own",
+   "Suitability, because the report ignores client constraints"
+  ],
+  "answer": 1,
+  "explanation": "Standard I(C) prohibits plagiarism: using others' work without attribution misrepresents the originality of the analysis.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "A supervisor discovers that a subordinate is violating securities regulations. Under Responsibilities of Supervisors, the supervisor should:",
+  "options": [
+   "wait for the next annual compliance review before acting",
+   "rely on the firm's existing compliance procedures and take no further action",
+   "act promptly to stop the violation, investigate, and escalate to compliance as appropriate"
+  ],
+  "answer": 2,
+  "explanation": "Standard IV(C) requires reasonable efforts to detect and prevent violations. Having procedures in place is not enough once a violation is known.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "Under GIPS, a firm creating a composite for a strategy may NOT exclude:",
+  "options": [
+   "a portfolio that does not follow the composite's strategy",
+   "a fee-paying discretionary portfolio that performed poorly",
+   "a non-discretionary portfolio that the manager cannot control"
+  ],
+  "answer": 1,
+  "explanation": "GIPS requires all actual, fee-paying, discretionary portfolios following the strategy to be included. Cherry-picking performance is prohibited.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "Which practice BEST complies with the Fair Dealing standard when an analyst changes a recommendation?",
+  "options": [
+   "Calling the largest clients first and informing others later at the firm's convenience",
+   "Informing only clients who specifically ask about the stock",
+   "Making the change available to all clients with an equal opportunity to act"
+  ],
+  "answer": 2,
+  "explanation": "Standard III(B) requires equitable dissemination of recommendation changes; no group of clients should be systematically disadvantaged.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "Before making an investment recommendation to a client, a manager must FIRST:",
+  "options": [
+   "gather information about the client's objectives, constraints, and risk tolerance",
+   "confirm that the recommended security has the highest expected return",
+   "obtain the employer's written approval for the specific security"
+  ],
+  "answer": 0,
+  "explanation": "Standard III(C) Suitability requires knowing the client's circumstances and updating them regularly, typically documented in an investment policy statement.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "An analyst plans to rely on third-party research in her recommendation. Consistent with Diligence and Reasonable Basis, she should:",
+  "options": [
+   "avoid disclosing the source so as not to confuse clients",
+   "make reasonable inquiry into the quality and assumptions of the research",
+   "rely on it without review if the provider is well known"
+  ],
+  "answer": 1,
+  "explanation": "Standard V(A) permits reliance on others' research only after reasonable and diligent checks of its soundness.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Ethical and Professional Standards",
+  "q": "A member will receive a fee from an accounting firm for referring her clients to it. Under the Referral Fees standard, she must disclose the arrangement to:",
+  "options": [
+   "her employer only",
+   "her employer, and her clients and prospective clients",
+   "the accounting firm only"
+  ],
+  "answer": 1,
+  "explanation": "Standard VI(C) requires disclosure of any compensation or benefit received for referrals to the employer, clients and prospective clients, so they can evaluate the referral's objectivity.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "An investor deposits $10,000 at 6% compounded annually. The value after 5 years is closest to:",
+  "options": [
+   "$13,000.00",
+   "$13,382.26",
+   "$7,472.58"
+  ],
+  "answer": 1,
+  "explanation": "FV = 10,000 × 1.06^5 = 13,382.26. $13,000 uses simple interest; 7,472.58 is the present value, not the future value.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "A perpetuity pays $500 per year, with the first payment one year from now. At a discount rate of 8%, its present value is:",
+  "options": [
+   "$40",
+   "$4,000",
+   "$6,250"
+  ],
+  "answer": 2,
+  "explanation": "PV of a perpetuity = payment / rate = 500 / 0.08 = 6,250.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "A loan has a stated annual rate of 12% compounded monthly. The effective annual rate is closest to:",
+  "options": [
+   "12.00%",
+   "12.36%",
+   "12.68%"
+  ],
+  "answer": 2,
+  "explanation": "EAR = (1 + 0.12/12)^12 − 1 = 12.68%. 12.36% would correspond to semiannual compounding.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "A stock bought at $50 pays a $2 dividend and is sold at $55. The holding period return is:",
+  "options": [
+   "10.0%",
+   "14.0%",
+   "4.0%"
+  ],
+  "answer": 1,
+  "explanation": "HPR = (55 − 50 + 2) / 50 = 14.0%. 10% ignores the dividend; 4% is only the dividend yield.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "An asset returns +10% in year 1 and −10% in year 2. The geometric mean annual return is closest to:",
+  "options": [
+   "-0.50%",
+   "-1.00%",
+   "0.00%"
+  ],
+  "answer": 0,
+  "explanation": "Geometric mean = sqrt(1.10 × 0.90) − 1 = -0.50%. The arithmetic mean (0%) overstates compound growth.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "For the sample data 2, 4, 4, 4, 5, 5, 7, 9, the sample standard deviation is closest to:",
+  "options": [
+   "4.57",
+   "2.14",
+   "2.00"
+  ],
+  "answer": 1,
+  "explanation": "Sum of squared deviations = 32. Sample variance = 32/7 = 4.57; sample SD = 2.14. Dividing by 8 gives the population SD; 4.57 is the variance.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "Returns are normally distributed with mean 8% and standard deviation 10%. The approximate probability that a return falls between −2% and 18% is:",
+  "options": [
+   "95%",
+   "68%",
+   "99%"
+  ],
+  "answer": 1,
+  "explanation": "−2% to 18% is the mean ± 1 standard deviation, which covers about 68% of a normal distribution.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "The probability of a Type I error is equal to:",
+  "options": [
+   "the significance level of the test",
+   "the power of the test",
+   "the probability of failing to reject a false null hypothesis"
+  ],
+  "answer": 0,
+  "explanation": "A Type I error is rejecting a true null hypothesis; its probability is α, the significance level. Power = 1 − P(Type II error).",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "Two assets have a covariance of 40, with standard deviations of 10 and 8. Their correlation is:",
+  "options": [
+   "5.00",
+   "0.50",
+   "0.80"
+  ],
+  "answer": 1,
+  "explanation": "Correlation = Cov / (σ1 × σ2) = 40 / 80 = 0.50. A correlation cannot exceed 1, so 5.00 is impossible.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Quantitative Methods",
+  "q": "A project costs $1,000 and returns $600 at the end of each of the next two years. At a 10% discount rate, the NPV is closest to:",
+  "options": [
+   "$200.00",
+   "$41.32",
+   "$1,041.32"
+  ],
+  "answer": 1,
+  "explanation": "NPV = −1,000 + 600/1.1 + 600/1.1² = 41.32. $200 ignores discounting; 1,041.32 forgets the initial outlay.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "The price of a good rises 10% and the quantity demanded falls 20%. Demand for the good is:",
+  "options": [
+   "elastic, with a price elasticity of −2",
+   "unit elastic",
+   "inelastic, with a price elasticity of −0.5"
+  ],
+  "answer": 0,
+  "explanation": "Elasticity = %ΔQ / %ΔP = −20% / 10% = −2. Its absolute value exceeds 1, so demand is elastic.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "When consumers' incomes rise, the demand for an inferior good typically:",
+  "options": [
+   "stays unchanged",
+   "decreases",
+   "increases"
+  ],
+  "answer": 1,
+  "explanation": "By definition, demand for an inferior good falls as income rises, as buyers switch to preferred alternatives.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "In the long run, firms in perfect competition earn:",
+  "options": [
+   "zero economic profit",
+   "positive economic profit because they are price takers",
+   "economic losses because price equals marginal cost"
+  ],
+  "answer": 0,
+  "explanation": "Free entry and exit drive price to minimum average cost, so economic profit is zero (normal profit only).",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "A profit-maximizing monopolist produces the quantity at which:",
+  "options": [
+   "average revenue equals average cost",
+   "marginal revenue equals marginal cost, with price above marginal cost",
+   "price equals marginal cost"
+  ],
+  "answer": 1,
+  "explanation": "A monopolist sets MR = MC, then charges the price on the demand curve at that quantity, which exceeds MC.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "Which action by a central bank is MOST consistent with contractionary monetary policy?",
+  "options": [
+   "Raising the policy rate and selling government securities",
+   "Lowering the reserve requirement",
+   "Purchasing government securities in the open market"
+  ],
+  "answer": 0,
+  "explanation": "Raising rates and open-market sales drain reserves and tighten credit. The other two actions expand liquidity.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "Which of the following is an example of expansionary fiscal policy?",
+  "options": [
+   "An increase in the central bank's policy rate",
+   "A reduction in government spending to cut the deficit",
+   "A tax cut combined with higher government spending"
+  ],
+  "answer": 2,
+  "explanation": "Fiscal policy uses taxes and spending. Cutting taxes and/or raising spending stimulates aggregate demand.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "Nominal GDP is 1,100 and the GDP deflator is 110. Real GDP is:",
+  "options": [
+   "1,210",
+   "1,000",
+   "990"
+  ],
+  "answer": 1,
+  "explanation": "Real GDP = Nominal GDP / Deflator × 100 = 1,100 / 110 × 100 = 1,000.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "A country has a comparative advantage in a good when it:",
+  "options": [
+   "has the lowest wages in the world",
+   "can produce the good at a lower opportunity cost than its trading partners",
+   "can produce the good using fewer total resources than any other country"
+  ],
+  "answer": 1,
+  "explanation": "Comparative advantage depends on opportunity cost, not absolute productivity or wage levels.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "The USD/EUR exchange rate (USD per 1 EUR) rises from 1.10 to 1.20. The euro has:",
+  "options": [
+   "appreciated against the dollar",
+   "remained unchanged in real terms",
+   "depreciated against the dollar"
+  ],
+  "answer": 0,
+  "explanation": "More dollars are needed to buy one euro, so the euro (the base currency) has appreciated.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Economics",
+  "q": "Imposing a tariff on imported steel will most likely:",
+  "options": [
+   "lower domestic prices and reduce the government's revenue",
+   "increase imports and reduce domestic production",
+   "raise domestic prices and benefit domestic producers and the government, while hurting consumers"
+  ],
+  "answer": 2,
+  "explanation": "A tariff raises the domestic price, shifts surplus from consumers to producers and the government, and creates a deadweight loss.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "A company has assets of 500 and liabilities of 300. Its shareholders' equity is:",
+  "options": [
+   "800",
+   "200",
+   "100"
+  ],
+  "answer": 1,
+  "explanation": "Assets = Liabilities + Equity, so Equity = 500 − 300 = 200.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "In a period of rising prices, compared with LIFO, FIFO results in:",
+  "options": [
+   "higher cost of goods sold and lower ending inventory",
+   "lower net income and higher cash taxes saved",
+   "lower cost of goods sold and higher net income"
+  ],
+  "answer": 2,
+  "explanation": "FIFO charges older, cheaper costs to COGS, so COGS is lower and income is higher; ending inventory is closer to current cost.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "Current assets are 400 and current liabilities are 250. The current ratio is:",
+  "options": [
+   "2.60",
+   "0.63",
+   "1.60"
+  ],
+  "answer": 2,
+  "explanation": "Current ratio = 400 / 250 = 1.60.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "An asset costs 100,000, has a salvage value of 10,000 and a 5-year life. Annual straight-line depreciation is:",
+  "options": [
+   "18,000",
+   "22,000",
+   "20,000"
+  ],
+  "answer": 0,
+  "explanation": "(100,000 − 10,000) / 5 = 18,000. Ignoring salvage gives 20,000.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "Under US GAAP, interest paid by a company is classified in the cash flow statement as:",
+  "options": [
+   "an investing activity",
+   "an operating activity",
+   "a financing activity"
+  ],
+  "answer": 1,
+  "explanation": "US GAAP classifies interest paid as CFO. IFRS allows either operating or financing.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "Revenue is 800 and cost of goods sold is 520. The gross profit margin is:",
+  "options": [
+   "65.0%",
+   "35.0%",
+   "53.8%"
+  ],
+  "answer": 1,
+  "explanation": "Gross profit = 280; margin = 280 / 800 = 35.0%. 65% is COGS/revenue; 53.8% is gross profit/COGS.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "A firm has a net profit margin of 5%, total asset turnover of 1.2, and an equity multiplier of 2.5. Its ROE is:",
+  "options": [
+   "15.0%",
+   "6.0%",
+   "12.5%"
+  ],
+  "answer": 0,
+  "explanation": "DuPont: ROE = 5% × 1.2 × 2.5 = 15.0%. Omitting leverage gives 6%; omitting turnover gives 12.5%.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "Goodwill acquired in a business combination is generally:",
+  "options": [
+   "expensed immediately in the period of acquisition",
+   "tested for impairment rather than amortized",
+   "amortized over 5 years"
+  ],
+  "answer": 1,
+  "explanation": "Under IFRS and US GAAP (public companies), goodwill is not amortized but tested for impairment at least annually.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "A deferred tax liability typically arises when:",
+  "options": [
+   "tax expense in the income statement exceeds taxes payable, for example due to accelerated tax depreciation",
+   "a company reports a loss in the current period",
+   "taxes payable exceed tax expense because of warranty accruals"
+  ],
+  "answer": 0,
+  "explanation": "Taxable income lower than accounting income in the current period creates a temporary difference that will reverse, leaving a DTL.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Financial Statement Analysis",
+  "q": "Revenue is 1,200 and average receivables are 200. Days sales outstanding is closest to:",
+  "options": [
+   "30.4 days",
+   "6.0 days",
+   "60.8 days"
+  ],
+  "answer": 2,
+  "explanation": "Receivables turnover = 1,200 / 200 = 6. DSO = 365 / 6 = 60.8 days.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "The agency problem in a corporation refers to conflicts of interest between:",
+  "options": [
+   "customers and suppliers",
+   "preferred and common shareholders only",
+   "managers and shareholders"
+  ],
+  "answer": 2,
+  "explanation": "Managers (agents) may act in their own interest rather than the owners'. Governance mechanisms aim to align incentives.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "A firm is financed 60% by equity (cost 12%) and 40% by debt (pre-tax cost 6%), with a tax rate of 25%. Its WACC is:",
+  "options": [
+   "9.6%",
+   "7.2%",
+   "9.0%"
+  ],
+  "answer": 2,
+  "explanation": "WACC = 0.6×12% + 0.4×6%×(1−0.25) = 9.0%. 9.6% ignores the tax shield.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "A key weakness of the payback period rule is that it:",
+  "options": [
+   "requires a required rate of return that is hard to estimate",
+   "always favors long-lived projects",
+   "ignores cash flows after the payback period and the time value of money"
+  ],
+  "answer": 2,
+  "explanation": "Payback only measures how fast the investment is recovered; it ignores later cash flows (and discounting in its simple form).",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "For two mutually exclusive projects where NPV and IRR rankings conflict, the analyst should choose the project with:",
+  "options": [
+   "the higher NPV",
+   "the shorter payback period",
+   "the higher IRR"
+  ],
+  "answer": 0,
+  "explanation": "NPV measures value added in currency terms; IRR can mislead due to scale and timing differences.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "Holding other factors constant, a firm with higher fixed operating costs has:",
+  "options": [
+   "lower business risk",
+   "lower sensitivity of operating income to sales",
+   "a higher degree of operating leverage"
+  ],
+  "answer": 2,
+  "explanation": "More fixed costs amplify the effect of sales changes on operating income.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "According to Modigliani and Miller Proposition I (no taxes, no distress costs), firm value:",
+  "options": [
+   "decreases as leverage rises",
+   "is independent of its capital structure",
+   "increases with more debt because debt is cheaper"
+  ],
+  "answer": 1,
+  "explanation": "Without taxes or frictions, the mix of debt and equity does not change total firm value; it only splits the same cash flows.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "Compared with paying a cash dividend of the same amount, a share repurchase typically:",
+  "options": [
+   "reduces the stock's price per share for sure",
+   "reduces shares outstanding",
+   "increases total shareholders' equity"
+  ],
+  "answer": 1,
+  "explanation": "A buyback retires shares and reduces equity; EPS may rise because there are fewer shares outstanding.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "DIO is 50 days, DSO is 40 days, and DPO is 30 days. The cash conversion cycle is:",
+  "options": [
+   "60 days",
+   "20 days",
+   "120 days"
+  ],
+  "answer": 0,
+  "explanation": "CCC = DIO + DSO − DPO = 50 + 40 − 30 = 60 days.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "Which is MOST consistent with good corporate governance regarding the audit committee?",
+  "options": [
+   "It should include the CFO as the majority",
+   "It should be chaired by the CEO",
+   "It should be composed of independent directors"
+  ],
+  "answer": 2,
+  "explanation": "Independence of the audit committee protects the integrity of financial reporting from management influence.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Corporate Issuers",
+  "q": "Using more debt financing most directly increases a firm's:",
+  "options": [
+   "inventory turnover",
+   "financial risk",
+   "business risk"
+  ],
+  "answer": 1,
+  "explanation": "Fixed interest obligations raise the variability of net income to equity holders; this is financial risk, separate from business risk.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "A price-weighted index contains three stocks priced at 20, 30 and 50. The index value (divisor = 3) is:",
+  "options": [
+   "25.00",
+   "100.00",
+   "33.33"
+  ],
+  "answer": 2,
+  "explanation": "Index = sum of prices / divisor = 100 / 3 = 33.33.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "The weak form of the efficient market hypothesis implies that:",
+  "options": [
+   "past price data cannot be used to earn abnormal returns",
+   "public information cannot be used to earn abnormal returns",
+   "insiders cannot earn abnormal returns"
+  ],
+  "answer": 0,
+  "explanation": "Weak form: prices reflect all past market data, so technical analysis should not produce excess returns.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "An investor sells a stock short at $40 and buys it back at $32. Ignoring costs, the gain per share is:",
+  "options": [
+   "$32",
+   "−$8",
+   "$8"
+  ],
+  "answer": 2,
+  "explanation": "Short seller profits from price declines: 40 − 32 = $8 per share.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "A stock's next dividend is $2.00, the required return is 10%, and the dividend growth rate is 4% forever. The Gordon growth value is:",
+  "options": [
+   "$50.00",
+   "$20.00",
+   "$33.33"
+  ],
+  "answer": 2,
+  "explanation": "V = D1 / (r − g) = 2 / 0.06 = 33.33.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "A stock trades at $45 with earnings per share of $3. Its P/E ratio is:",
+  "options": [
+   "0.07",
+   "15.0",
+   "135.0"
+  ],
+  "answer": 1,
+  "explanation": "P/E = price / EPS = 45 / 3 = 15.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "Compared with a market order, a limit order:",
+  "options": [
+   "guarantees execution but not the price",
+   "guarantees both price and execution",
+   "guarantees the price but not execution"
+  ],
+  "answer": 2,
+  "explanation": "A limit order specifies the worst acceptable price, so it may remain unfilled.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "In a market-capitalization-weighted index, a stock's weight is determined by:",
+  "options": [
+   "an equal allocation to each constituent",
+   "its share price relative to the sum of prices",
+   "its market value relative to the total market value of the index"
+  ],
+  "answer": 2,
+  "explanation": "Larger companies by market value have larger weights.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "A stock pays an annual dividend of $2 and trades at $50. The dividend yield is:",
+  "options": [
+   "2.0%",
+   "4.0%",
+   "25.0%"
+  ],
+  "answer": 1,
+  "explanation": "Dividend yield = 2 / 50 = 4.0%.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "In a firm commitment underwriting, the underwriter:",
+  "options": [
+   "buys the entire issue and bears the risk of unsold shares",
+   "acts only as an agent and bears no risk",
+   "is paid only if all shares are sold"
+  ],
+  "answer": 0,
+  "explanation": "A firm commitment transfers the unsold-share risk to the underwriter; best-efforts deals leave it with the issuer.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Equity Investments",
+  "q": "An investor buys $20,000 of stock with a 50% initial margin requirement. The investor's own equity contribution is:",
+  "options": [
+   "$10,000",
+   "$5,000",
+   "$20,000"
+  ],
+  "answer": 0,
+  "explanation": "Initial margin of 50% means the investor funds half the purchase: $10,000, borrowing the rest.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "Holding other factors constant, when market yields rise, the price of an existing fixed-rate bond:",
+  "options": [
+   "rises",
+   "stays at par",
+   "falls"
+  ],
+  "answer": 2,
+  "explanation": "Bond prices and yields move inversely, because the fixed cash flows are discounted at a higher rate.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A bond with a par value of $1,000 and a 5% coupon pays semiannually. Each coupon payment is:",
+  "options": [
+   "$50",
+   "$5",
+   "$25"
+  ],
+  "answer": 2,
+  "explanation": "Annual coupon = $50; semiannual payment = $25.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A bond with a coupon rate higher than its yield to maturity will trade at:",
+  "options": [
+   "a discount to par",
+   "a premium to par",
+   "par exactly"
+  ],
+  "answer": 1,
+  "explanation": "Coupons above the required yield make the bond more attractive, so its price exceeds par.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "Compared with a coupon bond of the same maturity, a zero-coupon bond has:",
+  "options": [
+   "the same duration",
+   "a shorter duration",
+   "a longer duration"
+  ],
+  "answer": 2,
+  "explanation": "A zero's only cash flow is at maturity, so its duration equals its maturity, longer than the coupon bond's.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A bond has a modified duration of 5. If its yield rises by 1 percentage point, its price will change by approximately:",
+  "options": [
+   "a decrease of 5%",
+   "a decrease of 0.2%",
+   "an increase of 5%"
+  ],
+  "answer": 0,
+  "explanation": "ΔP/P ≈ −ModDur × ΔYield = −5 × 1% = −5%.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A bond with a $60 annual coupon trades at $950. Its current yield is closest to:",
+  "options": [
+   "6.67%",
+   "6.00%",
+   "6.32%"
+  ],
+  "answer": 2,
+  "explanation": "Current yield = annual coupon / price = 60 / 950 = 6.32%.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A callable bond, compared with an otherwise identical non-callable bond:",
+  "options": [
+   "has a lower yield because it is safer",
+   "offers a higher yield and exhibits negative convexity when rates fall",
+   "gains more in price when rates fall"
+  ],
+  "answer": 1,
+  "explanation": "The issuer's call option caps price appreciation (negative convexity); investors are compensated with a higher yield.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "If a corporate bond's credit spread widens while benchmark yields are unchanged, the bond's price will:",
+  "options": [
+   "remain unchanged",
+   "fall",
+   "rise"
+  ],
+  "answer": 1,
+  "explanation": "A wider spread raises the bond's yield, lowering its price.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "An inverted yield curve means that:",
+  "options": [
+   "long-term yields are higher than short-term yields",
+   "short-term yields are higher than long-term yields",
+   "all maturities have the same yield"
+  ],
+  "answer": 1,
+  "explanation": "An inverted curve slopes downward and is often associated with expectations of falling rates or economic slowdown.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Fixed Income",
+  "q": "A 2-year bond has a par value of 100, a 5% annual coupon, and a yield to maturity of 6%. Its price is closest to:",
+  "options": [
+   "101.83",
+   "98.17",
+   "100.00"
+  ],
+  "answer": 1,
+  "explanation": "Price = 5/1.06 + 105/1.06² = 98.17. The bond is a discount bond because its coupon is below the yield.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "At expiration, the payoff to the long position in a forward contract with delivery price K and underlying price S_T is:",
+  "options": [
+   "K − S_T",
+   "S_T − K",
+   "max(0, S_T − K)"
+  ],
+  "answer": 1,
+  "explanation": "The long gains when the underlying exceeds the agreed price. Unlike an option, a forward payoff can be negative.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "An investor buys a call with a strike of $50 for a premium of $3. At expiration the stock is $55. The investor's profit is:",
+  "options": [
+   "$5",
+   "$2",
+   "−$3"
+  ],
+  "answer": 1,
+  "explanation": "Payoff = 55 − 50 = 5. Profit = 5 − 3 = $2.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "The buyer of a put option has:",
+  "options": [
+   "the obligation to buy the underlying at the strike price",
+   "the right to buy the underlying at the strike price",
+   "the right, but not the obligation, to sell the underlying at the strike price"
+  ],
+  "answer": 2,
+  "explanation": "A put gives its holder the right to sell. The writer is the one with the obligation.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "A European call is priced at $6. The stock is $50, the strike is $50, the risk-free rate is 5% and expiration is in one year. By put-call parity, the put is priced at:",
+  "options": [
+   "$3.62",
+   "$6.00",
+   "$8.38"
+  ],
+  "answer": 0,
+  "explanation": "p = c + K/(1+r) − S = 6 + 47.62 − 50 = 3.62.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "Compared with forward contracts, futures contracts are:",
+  "options": [
+   "settled only at expiration with no margin requirement",
+   "standardized, exchange-traded, and marked to market daily",
+   "customized and privately negotiated"
+  ],
+  "answer": 1,
+  "explanation": "Futures trade on exchanges through a clearinghouse, which reduces credit risk via daily settlement and margin.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "A party that enters a derivatives position to reduce an existing risk exposure is a:",
+  "options": [
+   "arbitrageur",
+   "hedger",
+   "speculator"
+  ],
+  "answer": 1,
+  "explanation": "Hedgers use derivatives to offset risk; speculators take on risk; arbitrageurs seek risk-free profit from mispricing.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "In an interest rate swap, the party paying fixed and receiving floating benefits when:",
+  "options": [
+   "market interest rates fall",
+   "the swap's notional principal is reduced",
+   "market interest rates rise"
+  ],
+  "answer": 2,
+  "explanation": "The fixed payer locks in a rate; if floating rates rise, it receives more floating than the fixed it pays.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "An arbitrage opportunity is a transaction that:",
+  "options": [
+   "requires holding the position until maturity",
+   "earns a high expected profit with moderate risk",
+   "earns a riskless profit with no net investment"
+  ],
+  "answer": 2,
+  "explanation": "Arbitrage exploits mispricing without risk or capital outlay; the law of one price implies such opportunities disappear quickly.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "A call option trades at $7. The stock is $55 and the strike is $50. The option's time value is:",
+  "options": [
+   "$7",
+   "$5",
+   "$2"
+  ],
+  "answer": 2,
+  "explanation": "Intrinsic value = 55 − 50 = 5. Time value = premium − intrinsic = 7 − 5 = $2.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Derivatives",
+  "q": "An asset trades at $100 and pays no income. The risk-free rate is 4%. The one-year forward price is:",
+  "options": [
+   "$104.00",
+   "$96.15",
+   "$100.00"
+  ],
+  "answer": 0,
+  "explanation": "F = S × (1 + r)^T = 100 × 1.04 = 104.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "A hedge fund charging '2 and 20' typically charges:",
+  "options": [
+   "a 2% management fee and a 20% incentive fee on profits",
+   "a 20% management fee and a 2% incentive fee",
+   "a 2% fee on profits and a 20% fee on assets"
+  ],
+  "answer": 0,
+  "explanation": "'2 and 20' refers to a 2% fee on assets under management plus a 20% performance fee.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "The 'J-curve' effect in private equity refers to:",
+  "options": [
+   "high returns early followed by losses",
+   "negative early returns, followed by positive returns later in the fund's life",
+   "steadily rising returns from the first year"
+  ],
+  "answer": 1,
+  "explanation": "Fees and early investment costs lead to negative returns in early years; gains emerge as investments mature.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "Compared with direct real estate ownership, REITs generally offer:",
+  "options": [
+   "less diversification and higher transaction costs",
+   "greater liquidity and lower minimum investment",
+   "no exposure to real estate market cycles"
+  ],
+  "answer": 1,
+  "explanation": "REITs trade like stocks, so they are more liquid and accessible than direct property ownership.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "A hurdle rate in a private fund is:",
+  "options": [
+   "the maximum management fee allowed",
+   "the interest rate paid on committed capital",
+   "the minimum return that must be achieved before performance fees are paid"
+  ],
+  "answer": 2,
+  "explanation": "Fund managers earn carried interest only on returns above the hurdle (preferred return).",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "Venture capital investments are typically made in:",
+  "options": [
+   "publicly traded blue-chip companies",
+   "early-stage companies with high growth potential and high risk",
+   "mature companies with stable cash flows"
+  ],
+  "answer": 1,
+  "explanation": "VC funds finance startups in exchange for equity, accepting high failure rates for outsized winners.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "Futures markets in contango imply that, for an investor rolling long futures positions:",
+  "options": [
+   "roll yield is always zero",
+   "roll yield is typically negative",
+   "roll yield is typically positive"
+  ],
+  "answer": 1,
+  "explanation": "In contango, longer-dated futures are more expensive; rolling into them means buying high and selling low relative to spot convergence.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "Appraisal-based valuations of illiquid assets tend to produce:",
+  "options": [
+   "exaggerated volatility",
+   "returns uncorrelated with the market by construction",
+   "smoothed returns that understate true volatility"
+  ],
+  "answer": 2,
+  "explanation": "Appraisals lag market prices, dampening reported volatility and correlation with other assets.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "A leveraged buyout is an acquisition that is financed:",
+  "options": [
+   "with government grants",
+   "entirely with equity from existing shareholders",
+   "primarily with debt, secured by the target's assets and cash flows"
+  ],
+  "answer": 2,
+  "explanation": "LBO sponsors use high leverage to boost equity returns; the target's cash flows service the debt.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "Which feature is MOST characteristic of infrastructure investments?",
+  "options": [
+   "long-lived assets generating stable, often inflation-linked cash flows",
+   "daily liquidity",
+   "short asset lives and highly volatile revenues"
+  ],
+  "answer": 0,
+  "explanation": "Toll roads, utilities and similar assets tend to have predictable, regulated or contracted revenues.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Alternative Investments",
+  "q": "A distinctive feature of a public permissionless blockchain is that:",
+  "options": [
+   "a single administrator approves every transaction",
+   "only pre-approved institutions can join the network",
+   "no central authority validates transactions; consensus is reached by network participants"
+  ],
+  "answer": 2,
+  "explanation": "Permissionless networks let anyone participate in validation, secured by consensus mechanisms such as proof of work or stake.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "A portfolio is 60% in an asset expected to return 10% and 40% in an asset expected to return 5%. The portfolio's expected return is:",
+  "options": [
+   "7.5%",
+   "9.0%",
+   "8.0%"
+  ],
+  "answer": 2,
+  "explanation": "Weighted average: 0.6 × 10% + 0.4 × 5% = 8.0%.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "Diversification primarily reduces:",
+  "options": [
+   "unsystematic (company-specific) risk",
+   "the risk-free rate",
+   "systematic risk"
+  ],
+  "answer": 0,
+  "explanation": "Idiosyncratic risk averages out across many holdings; market-wide risk cannot be diversified away.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "For two risky assets, portfolio risk is lowest when the correlation between them is:",
+  "options": [
+   "0",
+   "−1",
+   "+1"
+  ],
+  "answer": 1,
+  "explanation": "Perfect negative correlation gives the maximum diversification benefit; at +1 there is none.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "The risk-free rate is 3%, the market return is 8% and a stock's beta is 1.2. By CAPM, the stock's required return is:",
+  "options": [
+   "6.0%",
+   "9.6%",
+   "9.0%"
+  ],
+  "answer": 2,
+  "explanation": "E(R) = 3% + 1.2 × (8% − 3%) = 9.0%. 9.6% forgets the risk-free rate in the premium; 6.0% omits the risk-free rate.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "A portfolio returned 12% with a standard deviation of 20%. The risk-free rate is 2%. The Sharpe ratio is:",
+  "options": [
+   "0.10",
+   "0.60",
+   "0.50"
+  ],
+  "answer": 2,
+  "explanation": "Sharpe = (12% − 2%) / 20% = 0.50.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "The efficient frontier consists of portfolios that offer:",
+  "options": [
+   "a risk-free return",
+   "the highest expected return for each level of risk",
+   "the lowest risk for any level of return, including inefficient ones"
+  ],
+  "answer": 1,
+  "explanation": "Portfolios on the frontier cannot be improved: no other portfolio has a higher return for the same risk.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "An investor holds losing stocks too long and sells winners too early. This is MOST consistent with:",
+  "options": [
+   "mental accounting only",
+   "loss aversion",
+   "representativeness"
+  ],
+  "answer": 1,
+  "explanation": "Loss aversion makes realized losses painful, so investors avoid selling losers (the disposition effect).",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "An investment policy statement should include the client's:",
+  "options": [
+   "the manager's fee schedule and trade history",
+   "only the target return",
+   "return objectives, risk tolerance, and constraints"
+  ],
+  "answer": 2,
+  "explanation": "An IPS documents objectives (return and risk) and constraints: liquidity, time horizon, taxes, legal/regulatory, and unique circumstances.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "Two assets have standard deviations of 20% and 10% and a correlation of 0.5. In an equal-weighted portfolio, the standard deviation is closest to:",
+  "options": [
+   "13.23%",
+   "1.75%",
+   "15.00%"
+  ],
+  "answer": 0,
+  "explanation": "Variance = 0.25×0.04 + 0.25×0.01 + 2×0.25×0.5×0.2×0.1 = 0.0175; SD = 13.23%, below the 15% weighted average because correlation < 1.",
+  "source": "Original practice question (unofficial)"
+ },
+ {
+  "topic": "Portfolio Management",
+  "q": "Investors with overconfidence bias tend to:",
+  "options": [
+   "hold overly diversified portfolios",
+   "sell winners to avoid regret",
+   "trade too frequently and underestimate risk"
+  ],
+  "answer": 2,
+  "explanation": "Overconfident investors overestimate their skill, leading to excessive trading and concentrated positions.",
+  "source": "Original practice question (unofficial)"
+ }
+]

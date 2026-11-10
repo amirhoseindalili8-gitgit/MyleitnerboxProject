@@ -450,7 +450,6 @@
                 <button id="ack-new-btn" class="btn btn-primary btn-small" onclick="handleAnswer(true)" style="display:none;">متوجه شدم، بعدی</button>
                 <button id="got-it-btn" class="btn btn-success btn-small" onclick="handleAnswer(true)" style="display:none;">یادم بود!</button>
                 <button id="did-not-get-it-btn" class="btn btn-danger btn-small" onclick="handleAnswer(false)" style="display:none;">اشتباه گفتم!</button>
-                <button id="type-english-btn" class="btn btn-primary btn-small" onclick="handleAnswer(true, true)" style="display:none;">یادم بود! (تایپ انگلیسی)</button>
                 <button id="end-session-btn" class="btn btn-primary" onclick="confirmEndSession()" style="margin-top:10px;">✅ پایان مرور امروز — رفتن به فردا</button>
             </div>
             <div class="stats" id="stats"></div>
@@ -774,7 +773,6 @@
         const ackNewBtn = document.getElementById('ack-new-btn');
         const gotItBtn = document.getElementById('got-it-btn');
         const didNotGetItBtn = document.getElementById('did-not-get-it-btn');
-        const typeEnglishBtn = document.getElementById('type-english-btn');
         const cardEl = document.getElementById('current-card');
         const statsEl = document.getElementById('stats');
         const speakBtn = document.getElementById('speak-front-btn');
@@ -786,7 +784,6 @@
         ackNewBtn.style.display = 'none';
         gotItBtn.style.display = 'none';
         didNotGetItBtn.style.display = 'none';
-        typeEnglishBtn.style.display = 'none';
         speakBtn.classList.add('hidden');
         cardEl.classList.remove('en', 'zh');
 
@@ -848,12 +845,8 @@
         }
 
         if (currentCard.type === 'english') {
-            if (currentCard.learnedCount >= 1 && Math.random() < 0.2) {
-                document.getElementById('type-english-btn').style.display = 'inline-block';
-            } else {
-                document.getElementById('got-it-btn').style.display = 'inline-block';
-                document.getElementById('did-not-get-it-btn').style.display = 'inline-block';
-            }
+            document.getElementById('got-it-btn').style.display = 'inline-block';
+            document.getElementById('did-not-get-it-btn').style.display = 'inline-block';
         } else {
             document.getElementById('got-it-btn').style.display = 'inline-block';
             document.getElementById('did-not-get-it-btn').style.display = 'inline-block';
