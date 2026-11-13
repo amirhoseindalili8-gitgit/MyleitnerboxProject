@@ -133,6 +133,13 @@ label.chk{ display:flex; align-items:center; gap:6px; font-size:.82em; color:var
 .tab span{ font-size:1.6em; line-height:1; }
 .tab.active{ color:var(--accent); font-weight:700; }
 .note{ font-size:.78em; color:var(--ink-faint); line-height:1.8; }
+.tw{ cursor:pointer; border-radius:3px; }
+.tw:active{ background:var(--accent-soft); }
+.tt{ cursor:pointer; border-bottom:1.5px dotted var(--accent); }
+#lk-ov{ z-index:200; background:rgba(0,0,0,.25); }
+#lk{ max-height:50vh; }
+.lk-fa{ font-size:1.15em; font-weight:700; margin:6px 0 4px; }
+.lk-en{ direction:ltr; text-align:left; font-size:.85em; color:var(--ink-soft); line-height:1.7; }
 </style>
 </head>
 <body>
@@ -236,6 +243,13 @@ label.chk{ display:flex; align-items:center; gap:6px; font-size:.82em; color:var
   <div class="btn-row"><button class="btn primary" id="m-add">افزودن به مرور</button></div>
 </div></div>
 
+<div class="overlay" id="lk-ov"><div class="sheet" id="lk">
+  <div class="sheet-head"><div class="sheet-term" id="lk-term"></div><button class="x-btn" id="lk-close" aria-label="بستن">✕</button></div>
+  <div class="tags" id="lk-tags"></div>
+  <div id="lk-body"></div>
+  <div class="btn-row"><button class="btn" id="lk-full">نمایش کامل</button><button class="btn primary" id="lk-add">افزودن به مرور</button></div>
+</div></div>
+
 <script>
 /* ================================================================
    Data / constants
@@ -307,11 +321,16 @@ async function loadBank() {
   bankByKey = new Map(bank.map(e => [keyOf('cfa', e.w), e]));
   try {
     const r = await fetch('./wordbank.json', { cache: 'no-store' });
-    if (r.ok) (await r.json()).forEach(e => { if (e.l !== 'CFA1' && e.m && e.w) generalMap.set(String(e.w).toLowerCase(), e); });
+    if (r.ok) (await r.json()).forEach(e => { const m = cleanMeaning(e.m); if (e.l !== 'CFA1' && m && e.w) generalMap.set(String(e.w).toLowerCase(), Object.assign({}, e, { m })); });
   } catch (e) { /* optional */ }
   buildPhraseIndex();
 }
 
+function cleanMeaning(m) {
+  m = String(m || '').trim();
+  if (m.startsWith('=')) { const q = [...m.matchAll(/"([^"]+)"/g)].map(x => x[1]); return q.length ? q[q.length - 1] : ''; }
+  return m;
+}
 const normPhrase = s => String(s).toLowerCase().replace(/[’']s\b/g, '').replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 let phraseIdx = new Map(), maxPhrase = 1;
 function buildPhraseIndex() {
@@ -488,8 +507,8 @@ function openEntry(entry, kind, notFoundWord) {
     if (kind === 'cfa') {
       $('m-body').innerHTML = isDone(entry)
         ? `<div class="back"><div class="fa">${esc(entry.fa)}</div>
-           <div class="lbl">تعریف</div><div class="en-block">${esc(entry.d)}</div>
-           ${entry.x ? `<div class="lbl">مثال</div><div class="en-block ex">${esc(entry.x)}</div>` : ''}</div>`
+           <div class="lbl">تعریف <span style="font-weight:400">(روی هر کلمه بزنید)</span></div><div class="en-block">${tapHTML(entry.d)}</div>
+           ${entry.x ? `<div class="lbl">مثال</div><div class="en-block ex">${tapHTML(entry.x)}</div>` : ''}</div>`
         : '<div class="note">ترجمه و تعریف این اصطلاح هنوز تکمیل نشده است.</div>';
     } else {
       $('m-body').innerHTML = `<div class="back"><div class="fa">${esc(entry.m)}</div></div>`;
@@ -510,6 +529,57 @@ $('m-add').onclick = async () => {
   $('m-add').disabled = true; $('m-add').textContent = '✅ در مرور هست';
   renderWords(false); renderHome();
 };
+
+/* ================================================================
+   Tap-a-word lookup sheet (works inside popup, review card, quiz feedback)
+================================================================ */
+let lk = null;   // { kind:'cfa'|'general'|'none', entry, word }
+function openLookup(o) {
+  lk = o;
+  $('lk-full').classList.add('hidden'); $('lk-add').classList.remove('hidden');
+  if (o.kind === 'cfa') {
+    const e = o.entry;
+    $('lk-term').textContent = e.w;
+    $('lk-tags').innerHTML = `<span class="tag">${esc(topicFa(e.t))}</span>${e.g ? '<span class="tag">Glossary ۲۰۲۷</span>' : ''}`;
+    $('lk-body').innerHTML = isDone(e)
+      ? `<div class="lk-fa">${esc(e.fa)}</div><div class="lk-en">${esc(e.d.split(/(?<=[.!?])\s/)[0])}</div>`
+      : '<div class="note">ترجمه این اصطلاح هنوز تکمیل نشده.</div>';
+    $('lk-full').classList.remove('hidden');
+    const added = addedKeys.has(keyOf('cfa', e.w));
+    $('lk-add').disabled = added || !isDone(e); $('lk-add').textContent = added ? '✅ در مرور هست' : 'افزودن به مرور';
+  } else if (o.kind === 'general') {
+    const g = o.entry;
+    $('lk-term').textContent = o.word;
+    $('lk-tags').innerHTML = g.w.toLowerCase() !== o.word.toLowerCase() ? `<span class="tag">${esc(g.w)}</span>` : '';
+    $('lk-tags').innerHTML += `<span class="tag">${esc(g.l || 'عمومی')}</span>${g.p ? `<span class="tag">${esc(g.p)}</span>` : ''}`;
+    $('lk-body').innerHTML = `<div class="lk-fa">${esc(g.m)}</div>`;
+    const added = addedKeys.has(keyOf('general', g.w));
+    $('lk-add').disabled = added; $('lk-add').textContent = added ? '✅ در مرور هست' : 'افزودن به مرور';
+  } else {
+    $('lk-term').textContent = o.word; $('lk-tags').innerHTML = '';
+    $('lk-body').innerHTML = '<div class="note">این کلمه در بانک‌های موجود (CFA و CEFR) پیدا نشد.</div>';
+    $('lk-add').classList.add('hidden');
+  }
+  $('lk-ov').classList.add('open');
+}
+function closeLookup() { $('lk-ov').classList.remove('open'); }
+$('lk-close').onclick = closeLookup;
+$('lk-ov').addEventListener('click', e => { if (e.target === $('lk-ov')) closeLookup(); });
+$('lk-full').onclick = () => { if (lk && lk.kind === 'cfa') { closeLookup(); openEntry(lk.entry, 'cfa'); } };
+$('lk-add').onclick = async () => {
+  if (!lk) return;
+  if (lk.kind === 'cfa') await addEntryAsCard(lk.entry, 'cfa');
+  else if (lk.kind === 'general') await addEntryAsCard({ w: lk.entry.w, m: lk.entry.m, l: lk.entry.l }, 'general');
+  $('lk-add').disabled = true; $('lk-add').textContent = '✅ در مرور هست'; renderWords(false); renderHome();
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('.tt'), w = e.target.closest('.tw');
+  if (t) return openLookup({ kind: 'cfa', entry: bank[+t.dataset.i] });
+  if (w) {
+    const word = w.dataset.w, g = lookupGeneral(word);
+    openLookup(g ? { kind: 'general', entry: g, word } : { kind: 'none', word });
+  }
+});
 
 /* ================================================================
    Review
@@ -545,8 +615,8 @@ function showCard() {
   el.innerHTML = `<div class="state">${state} · ${fmt(qi + 1)} از ${fmt(queue.length)} · ${esc(topicFa(c.topic))}</div>
     <div class="front">${esc(c.w)} <button class="icon-btn" id="r-speak" style="display:inline-flex;width:32px;height:32px;" aria-label="تلفظ">🔊</button></div>
     <div class="back hidden" id="r-back"><div class="fa">${esc(v.fa)}</div>
-      ${v.d ? `<div class="lbl">تعریف</div><div class="en-block">${esc(v.d)}</div>` : ''}
-      ${v.x ? `<div class="lbl">مثال</div><div class="en-block ex">${esc(v.x)}</div>` : ''}</div>`;
+      ${v.d ? `<div class="lbl">تعریف</div><div class="en-block">${tapHTML(v.d)}</div>` : ''}
+      ${v.x ? `<div class="lbl">مثال</div><div class="en-block ex">${tapHTML(v.x)}</div>` : ''}</div>`;
   $('r-speak').onclick = () => speak(c.w);
   act.innerHTML = `<button class="btn primary" id="r-show">نمایش پاسخ</button>`;
   $('r-show').onclick = () => {
@@ -580,12 +650,11 @@ $('r-end').onclick = () => {
 /* ================================================================
    Reader (tap-to-lookup)
 ================================================================ */
-function renderReader(text) {
+function linkify(text, termCls, wordCls) {
   const re = /[A-Za-z][A-Za-z’'\-]*|\d+(?:[.,]\d+)*%?|[^A-Za-z\d]+/g;
-  const toks = text.match(re) || [];
+  const toks = String(text).match(re) || [];
   const isWord = t => /^[A-Za-z]/.test(t);
-  const widx = []; toks.forEach((t, i) => { if (isWord(t)) widx.push(i); });
-  const glue = s => /^[\s\-–]+$/.test(s) && !/\n/.test(s);
+  const glue = t => /^[\s\-–]+$/.test(t) && !/\n/.test(t);
   let html = '', i = 0;
   while (i < toks.length) {
     const t = toks[i];
@@ -602,15 +671,13 @@ function renderReader(text) {
       const e = lookupPhrase(normPhrase(parts.join(' ')));
       if (e) { hit = e; endTok = j; }
     }
-    if (hit) {
-      html += `<span class="rd-term" data-i="${bank.indexOf(hit)}">${esc(toks.slice(i, endTok + 1).join(''))}</span>`;
-      i = endTok + 1;
-    } else {
-      html += `<span class="rd-w" data-w="${esc(t)}">${esc(t)}</span>`; i++;
-    }
+    if (hit) { html += `<span class="${termCls}" data-i="${bank.indexOf(hit)}">${esc(toks.slice(i, endTok + 1).join(''))}</span>`; i = endTok + 1; }
+    else { html += `<span class="${wordCls}" data-w="${esc(t)}">${esc(t)}</span>`; i++; }
   }
-  $('rd-out').innerHTML = html; $('rd-card').classList.remove('hidden');
+  return html;
 }
+const tapHTML = text => linkify(text, 'tt', 'tw');
+function renderReader(text) { $('rd-out').innerHTML = linkify(text, 'rd-term', 'rd-w'); $('rd-card').classList.remove('hidden'); }
 $('rd-go').onclick = () => { const t = $('rd-input').value; if (t.trim()) renderReader(t); };
 $('rd-clear').onclick = () => { $('rd-input').value = ''; $('rd-out').innerHTML = ''; $('rd-card').classList.add('hidden'); };
 $('rd-out').addEventListener('click', e => {
@@ -663,7 +730,7 @@ function makeKnowQuestions(topic, n) {
       label: useCloze ? 'کدام اصطلاح جای خالی را کامل می‌کند؟' : 'این تعریف مربوط به کدام اصطلاح است؟',
       prompt: useCloze ? maskedEx : maskTerm(e.d, e),
       options: opts.map(o => o.w), correct: opts.indexOf(e),
-      explain: `<b dir="ltr">${esc(e.w)}</b> — ${esc(e.fa)}<div class="en-block">${esc(e.d)}</div>`,
+      explain: `<b dir="ltr">${esc(e.w)}</b> — ${esc(e.fa)}<div class="en-block">${tapHTML(e.d)}</div>`,
       entry: e,
     };
   });
